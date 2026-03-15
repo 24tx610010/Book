@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- MÀU CHỦ ĐẠO (PRIMARY) - Màu Tím Hiện Đại -->
+    <color name="colorPrimary">#6A11CB</color>
+    <color name="colorPrimaryDark">#4A0E99</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!-- MÀU PHỤ (SECONDARY) -->
+    <color name="colorSecondary">#9C27B0</color>
+    <color name="colorBackground">#F8F5FF</color>
+
+    <!-- MÀU VĂN BẢN -->
+    <color name="textPrimary">#2D2D2D</color>
+    <color name="textSecondary">#757575</color>
+
+    <!-- MÀU TRẠNG THÁI -->
+    <color name="success">#4CAF50</color>
+    <color name="error">#E53935</color>
+    <color name="warning">#FFB300</color>
+</resources>

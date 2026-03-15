@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Nút Quay lại -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_media_previous"
+            app:tint="#000000"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/txtAddTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="THÊM SÁCH MỚI"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:gravity="center"
+            android:layout_marginBottom="32dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tên sách" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <EditText android:id="@+id/edtBookName" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Nhập tên sách" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Giá bán" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <EditText android:id="@+id/edtBookPrice" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Ví dụ: 150000" android:inputType="numberDecimal" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
+
+        <!-- THÊM Ô NHẬP SỐ LƯỢNG TỒN -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Số lượng tồn" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <EditText android:id="@+id/edtStock" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Số lượng trong kho" android:inputType="number" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
+
+        <!-- CHỌN LOẠI SÁCH -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Loại sách" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <Spinner android:id="@+id/spCategory" android:layout_width="match_parent" android:layout_height="50dp" android:background="@drawable/bg_input" android:layout_marginBottom="16dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tác giả" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <EditText android:id="@+id/edtAuthor" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Nhập tên tác giả" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nhà xuất bản" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <EditText android:id="@+id/edtPublisher" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Kim Đồng, Trẻ..." android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Năm xuất bản" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <EditText android:id="@+id/edtYear" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Ví dụ: 2024" android:inputType="number" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ngôn ngữ" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <EditText android:id="@+id/edtLanguage" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Tiếng Việt, Tiếng Anh..." android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Link hình ảnh" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <EditText android:id="@+id/edtBookImage" android:layout_width="match_parent" android:layout_height="50dp" android:hint="https://link-anh.jpg" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mô tả sản phẩm" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+        <EditText android:id="@+id/edtBookDesc" android:layout_width="match_parent" android:layout_height="120dp" android:hint="Nội dung tóm tắt..." android:gravity="top" android:padding="12dp" android:background="@drawable/bg_input" android:layout_marginBottom="32dp"/>
+
+        <Button
+            android:id="@+id/btnSaveBook"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="LƯU THÔNG TIN"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+</ScrollView>
