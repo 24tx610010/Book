@@ -66,9 +66,11 @@ public class AdminUserAdapter extends RecyclerView.Adapter<AdminUserAdapter.User
             if (!newName.isEmpty() && !roleStr.isEmpty()) {
                 try {
                     int newRole = Integer.parseInt(roleStr);
+                    // Sử dụng đúng tên field trong Firestore (viết hoa)
                     FirebaseFirestore.getInstance().collection("users").document(user.getPhone())
-                            .update("hoTen", newName, "roleid", newRole)
-                            .addOnSuccessListener(aVoid -> Toast.makeText(context, "Đã cập nhật", Toast.LENGTH_SHORT).show());
+                            .update("HoTen", newName, "RoleID", newRole)
+                            .addOnSuccessListener(aVoid -> Toast.makeText(context, "Đã cập nhật", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e -> Toast.makeText(context, "Lỗi cập nhật: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                 } catch (NumberFormatException e) {
                     Toast.makeText(context, "Vai trò phải là số!", Toast.LENGTH_SHORT).show();
                 }
@@ -79,8 +81,8 @@ public class AdminUserAdapter extends RecyclerView.Adapter<AdminUserAdapter.User
     }
 
     private void showDeleteConfirm(User user) {
-        if (user.getPhone().equals("admin")) {
-            Toast.makeText(context, "Không thể xóa tài khoản admin hệ thống!", Toast.LENGTH_SHORT).show();
+        if (user.getPhone().equals("admin") || user.getRoleid() == 1) {
+            Toast.makeText(context, "Không thể xóa tài khoản admin!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -90,7 +92,8 @@ public class AdminUserAdapter extends RecyclerView.Adapter<AdminUserAdapter.User
                 .setPositiveButton("XÓA", (dialog, which) -> {
                     FirebaseFirestore.getInstance().collection("users").document(user.getPhone())
                             .delete()
-                            .addOnSuccessListener(aVoid -> Toast.makeText(context, "Đã xóa người dùng", Toast.LENGTH_SHORT).show());
+                            .addOnSuccessListener(aVoid -> Toast.makeText(context, "Đã xóa người dùng", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e -> Toast.makeText(context, "Lỗi xóa: " + e.getMessage(), Toast.LENGTH_SHORT).show());
                 })
                 .setNegativeButton("HỦY", null)
                 .show();

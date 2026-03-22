@@ -1,10 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-<<<<<<< HEAD
-
-    // Google Services plugin
-=======
->>>>>>> 0d5c59f (22/3)
     id("com.google.gms.google-services")
 }
 
@@ -37,9 +32,8 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 }
-dependencies {
-<<<<<<< HEAD
 
+dependencies {
     // Firebase BOM
     implementation(platform("com.google.firebase:firebase-bom:34.10.0"))
 
@@ -48,23 +42,23 @@ dependencies {
 
     // Firebase Analytics
     implementation("com.google.firebase:firebase-analytics")
+    
+    // Firebase Auth
+    implementation("com.google.firebase:firebase-auth")
+
+    // Google Sign In
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
+
+    // Facebook SDK
+    implementation("com.facebook.android:facebook-login:latest.release")
 
     // Glide load hình ảnh
-    implementation("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
-
-=======
-    implementation(platform("com.google.firebase:firebase-bom:34.10.0"))
-    implementation("com.google.firebase:firebase-firestore")
-    implementation("com.google.firebase:firebase-analytics")
-
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
 
     // THÊM THƯ VIỆN BIỂU ĐỒ MPANDROIDCHART
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
->>>>>>> 0d5c59f (22/3)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

@@ -24,11 +24,7 @@ import java.util.ArrayList;
 public class ProfileActivity extends AppCompatActivity {
 
     private TextView txtUsername, txtPhone, txtRole, txtHistoryTitle;
-<<<<<<< HEAD
-    private Button btnLogout, btnManageCategories, btnManageOrders;
-=======
     private Button btnLogout, btnManageCategories, btnManageOrders, btnManageUsers;
->>>>>>> 0d5c59f (22/3)
     private ImageButton btnBack;
     private LinearLayout layoutAdminTools;
     private RecyclerView rvOrderHistory;
@@ -54,10 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
         layoutAdminTools = findViewById(R.id.layoutAdminTools);
         btnManageCategories = findViewById(R.id.btnManageCategories);
         btnManageOrders = findViewById(R.id.btnManageOrders);
-<<<<<<< HEAD
-=======
         btnManageUsers = findViewById(R.id.btnManageUsers);
->>>>>>> 0d5c59f (22/3)
         
         btnBack = findViewById(R.id.btnBackProfile);
 
@@ -76,43 +69,11 @@ public class ProfileActivity extends AppCompatActivity {
         
         if (roleId == 1) {
             txtRole.setText("Quản trị viên (Admin)");
-<<<<<<< HEAD
-            // Hiện công cụ Admin, ẩn lịch sử khách hàng
-=======
->>>>>>> 0d5c59f (22/3)
             layoutAdminTools.setVisibility(View.VISIBLE);
             txtHistoryTitle.setVisibility(View.GONE);
             rvOrderHistory.setVisibility(View.GONE);
         } else {
             txtRole.setText("Khách hàng (User)");
-<<<<<<< HEAD
-            // Ẩn công cụ Admin, hiện lịch sử khách hàng
-            layoutAdminTools.setVisibility(View.GONE);
-            txtHistoryTitle.setVisibility(View.VISIBLE);
-            rvOrderHistory.setVisibility(View.VISIBLE);
-            
-            setupOrderHistory(phone);
-        }
-
-        // Mở trang quản lý loại sách
-        btnManageCategories.setOnClickListener(v -> {
-            startActivity(new Intent(this, CategoryListActivity.class));
-        });
-
-        // Mở trang quản lý đơn hàng
-        btnManageOrders.setOnClickListener(v -> {
-            startActivity(new Intent(this, AdminOrderListActivity.class));
-        });
-
-        // Xử lý đăng xuất
-        btnLogout.setOnClickListener(v -> {
-            SharedPreferences.Editor editor = sp.edit();
-            editor.putBoolean("logged_in", false);
-            editor.apply();
-
-            Toast.makeText(this, "Đã đăng xuất!", Toast.LENGTH_SHORT).show();
-
-=======
             layoutAdminTools.setVisibility(View.GONE);
             txtHistoryTitle.setVisibility(View.VISIBLE);
             rvOrderHistory.setVisibility(View.VISIBLE);
@@ -126,7 +87,6 @@ public class ProfileActivity extends AppCompatActivity {
         btnLogout.setOnClickListener(v -> {
             sp.edit().putBoolean("logged_in", false).apply();
             Toast.makeText(this, "Đã đăng xuất!", Toast.LENGTH_SHORT).show();
->>>>>>> 0d5c59f (22/3)
             Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

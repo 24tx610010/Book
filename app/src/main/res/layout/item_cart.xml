@@ -4,22 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-<<<<<<< HEAD
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
-=======
     app:cardCornerRadius="8dp">
->>>>>>> 0d5c59f (22/3)
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:orientation="horizontal"
-        android:padding="12dp">
-
-        <!-- THÊM HÌNH ẢNH TRONG GIỎ HÀNG -->
-=======
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:padding="12dp">
@@ -30,130 +19,26 @@
             android:layout_height="wrap_content"
             android:buttonTint="#FF9800" />
 
->>>>>>> 0d5c59f (22/3)
         <ImageView
             android:id="@+id/imgCartThumb"
             android:layout_width="80dp"
             android:layout_height="110dp"
-<<<<<<< HEAD
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_launcher"
-            android:background="#F0F0F0"/>
-=======
             android:layout_marginStart="8dp"
             android:background="#F5F5F5"
             android:scaleType="centerCrop"
             android:src="@mipmap/ic_launcher" />
->>>>>>> 0d5c59f (22/3)
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-<<<<<<< HEAD
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginStart="12dp">
-=======
             android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:orientation="vertical">
->>>>>>> 0d5c59f (22/3)
 
             <TextView
                 android:id="@+id/txtCartBookName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:text="Tên sách"
-                android:textColor="#000000"
-                android:textSize="17sp"
-                android:textStyle="bold"
-                android:maxLines="1"
-                android:ellipsize="end"/>
-
-            <TextView
-                android:id="@+id/txtCartUnitPrice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Đơn giá: 0 đ"
-                android:textColor="#555555"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/txtCartSubtotal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Thành tiền: 0 đ"
-                android:textColor="#E53935"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <!-- NÚT CHI TIẾT TRONG GIỎ HÀNG -->
-            <TextView
-                android:id="@+id/btnCartDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Xem chi tiết >"
-                android:textColor="@color/colorPrimary"
-                android:textSize="12sp"
-                android:layout_marginTop="8dp"
-                android:textStyle="italic"
-                android:padding="4dp"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="end|bottom"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/btnDeleteCartItem"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_menu_delete"
-                app:tint="#F44336" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btnMinus"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:minWidth="0dp"
-                    android:padding="0dp"
-                    android:text="-" />
-
-                <TextView
-                    android:id="@+id/txtCartQuantity"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="1"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btnPlus"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:minWidth="0dp"
-                    android:padding="0dp"
-                    android:text="+" />
-            </LinearLayout>
-        </LinearLayout>
-
-=======
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="Tên sách"
@@ -247,6 +132,5 @@
                     app:tint="#666666" />
             </LinearLayout>
         </LinearLayout>
->>>>>>> 0d5c59f (22/3)
     </LinearLayout>
 </androidx.cardview.widget.CardView>

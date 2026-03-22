@@ -34,20 +34,11 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-<<<<<<< HEAD
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="8dp"
-        app:layout_constraintBottom_toTopOf="@id/layoutBottomCart"
-        app:layout_constraintTop_toBottomOf="@id/toolbarCart" />
-=======
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/toolbarCart"
-        app:layout_constraintBottom_toTopOf="@id/layoutBottomCart">
+        app:layout_constraintBottom_toTopOf="@+id/layoutBottomCart"
+        app:layout_constraintTop_toBottomOf="@id/toolbarCart">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -55,7 +46,6 @@
             android:orientation="vertical"
             android:padding="8dp">
 
-            <!-- Thông tin địa chỉ -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,13 +62,14 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Địa chỉ nhận hàng"
-                            android:textStyle="bold"
                             android:textColor="@color/colorPrimary"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/btnChangeAddress"
@@ -96,8 +87,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="Họ tên | Số điện thoại"
-                        android:textStyle="bold"
-                        android:textColor="#333333" />
+                        android:textColor="#333333"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txtAddressDisplay"
@@ -106,7 +97,6 @@
                         android:layout_marginTop="4dp"
                         android:text="Vui lòng cập nhật địa chỉ giao hàng"
                         android:textColor="#666666" />
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -116,30 +106,33 @@
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false" />
 
-            <!-- PHẦN VOUCHER -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="2dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="12dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Voucher giảm giá"
-                        android:textStyle="bold"
                         android:textColor="#333333"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:layout_marginTop="8dp">
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
                         <EditText
                             android:id="@+id/edtVoucherCode"
                             android:layout_width="0dp"
@@ -149,6 +142,7 @@
                             android:hint="Nhập mã giảm giá"
                             android:paddingHorizontal="12dp"
                             android:textSize="14sp" />
+
                         <Button
                             android:id="@+id/btnApplyVoucher"
                             android:layout_width="wrap_content"
@@ -162,7 +156,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- PHẦN PHƯƠNG THỨC THANH TOÁN -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -170,36 +163,42 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="8dp"
                 app:cardElevation="2dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="12dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Phương thức thanh toán"
-                        android:textStyle="bold"
                         android:textColor="#333333"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
                     <RadioGroup
                         android:id="@+id/rgPaymentMethod"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:checkedButton="@+id/rbCOD">
+
                         <RadioButton
                             android:id="@+id/rbCOD"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Thanh toán khi nhận hàng (COD)"
                             android:textSize="14sp" />
+
                         <RadioButton
                             android:id="@+id/rbZaloPay"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Ví điện tử ZaloPay"
                             android:textSize="14sp" />
+
                         <RadioButton
                             android:id="@+id/rbMoMo"
                             android:layout_width="match_parent"
@@ -209,10 +208,8 @@
                     </RadioGroup>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
         </LinearLayout>
     </ScrollView>
->>>>>>> 0d5c59f (22/3)
 
     <LinearLayout
         android:id="@+id/layoutBottomCart"
@@ -253,11 +250,7 @@
             android:layout_height="56dp"
             android:layout_marginTop="12dp"
             android:backgroundTint="#E53935"
-<<<<<<< HEAD
-            android:text="THANH TOÁN NGAY"
-=======
             android:text="ĐẶT HÀNG"
->>>>>>> 0d5c59f (22/3)
             android:textStyle="bold" />
     </LinearLayout>
 

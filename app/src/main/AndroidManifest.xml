@@ -2,10 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-<<<<<<< HEAD
-    <!-- CẤP QUYỀN TRUY CẬP INTERNET ĐỂ LOAD ẢNH -->
-=======
->>>>>>> 0d5c59f (22/3)
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -19,46 +15,25 @@
         android:theme="@style/Theme.Bài1"
         tools:targetApi="31">
 
-<<<<<<< HEAD
-        <!-- ĐĂNG KÝ CÁC MÀN HÌNH QUẢN TRỊ -->
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
         <activity
-            android:name=".AdminOrderListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CategoryListActivity"
-            android:exported="false" />
-        <activity
-            android:name=".OrderHistoryDetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CartActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ForgotPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AddBookActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DetailActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HomeActivity"
-            android:exported="false" />
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".LoginActivity"
-=======
-        <!-- MÀN HÌNH CHÍNH KHI MỞ APP -->
-        <activity
-            android:name=".HomeActivity"
->>>>>>> 0d5c59f (22/3)
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -66,12 +41,9 @@
             </intent-filter>
         </activity>
 
-<<<<<<< HEAD
-=======
-        <!-- ĐỂ TRÁNH LỖI KHI CHẠY, CHÚNG TA ĐỂ ĐĂNG NHẬP LÀ TRUE LUÔN -->
         <activity
-            android:name=".LoginActivity"
-            android:exported="true" />
+            android:name=".HomeActivity"
+            android:exported="false" />
 
         <activity
             android:name=".MainActivity"
@@ -89,6 +61,5 @@
         <activity android:name=".PromotionActivity" android:exported="false" />
         <activity android:name=".AdminUserListActivity" android:exported="false" />
 
->>>>>>> 0d5c59f (22/3)
     </application>
 </manifest>

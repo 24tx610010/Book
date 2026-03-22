@@ -34,6 +34,59 @@
             android:orientation="vertical"
             android:padding="12dp">
 
+            <!-- ĐỊA CHỈ NHẬN HÀNG -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📍 ĐỊA CHỈ NHẬN HÀNG"
+                            android:textColor="#E53935"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/btnChangeAddress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="Thay đổi >"
+                            android:textColor="#1976D2"
+                            android:textSize="12sp"
+                            android:clickable="true"
+                            android:focusable="true"/>
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/txtCustomerInfo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Tên người nhận | SĐT"
+                        android:textColor="#000000"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtAddressDisplay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="Chưa có địa chỉ giao hàng"
+                        android:textColor="#666666"
+                        android:textSize="13sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <!-- BANNER KHUYẾN MÃI -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

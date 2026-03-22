@@ -35,14 +35,34 @@
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tên sách" android:textStyle="bold" android:layout_marginBottom="8dp"/>
         <EditText android:id="@+id/edtBookName" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Nhập tên sách" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
 
-        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Giá bán" android:textStyle="bold" android:layout_marginBottom="8dp"/>
-        <EditText android:id="@+id/edtBookPrice" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Ví dụ: 150000" android:inputType="numberDecimal" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginEnd="8dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Giá gốc (nếu có)" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                <EditText android:id="@+id/edtOriginalPrice" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Giá gốc" android:inputType="numberDecimal" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Giá bán hiện tại" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                <EditText android:id="@+id/edtBookPrice" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Giá bán" android:inputType="numberDecimal" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
+            </LinearLayout>
+        </LinearLayout>
 
-        <!-- THÊM Ô NHẬP SỐ LƯỢNG TỒN -->
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Số lượng tồn" android:textStyle="bold" android:layout_marginBottom="8dp"/>
         <EditText android:id="@+id/edtStock" android:layout_width="match_parent" android:layout_height="50dp" android:hint="Số lượng trong kho" android:inputType="number" android:background="@drawable/bg_input" android:paddingStart="12dp" android:paddingEnd="12dp" android:layout_marginBottom="16dp"/>
 
-        <!-- CHỌN LOẠI SÁCH -->
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Loại sách" android:textStyle="bold" android:layout_marginBottom="8dp"/>
         <Spinner android:id="@+id/spCategory" android:layout_width="match_parent" android:layout_height="50dp" android:background="@drawable/bg_input" android:layout_marginBottom="16dp"/>
 

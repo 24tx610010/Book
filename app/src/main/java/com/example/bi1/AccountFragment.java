@@ -25,12 +25,9 @@ import java.util.ArrayList;
 
 public class AccountFragment extends Fragment {
 
-    private TextView txtUsername, txtPhone, txtRole, txtHistoryTitle;
+    private TextView txtUsername, txtPhone, txtRole;
     private Button btnLogout, btnManageCategories, btnManageOrders, btnManageUsers, btnManageBooks;
     private View layoutAdminTools;
-    private RecyclerView rvOrderHistory;
-    private OrderAdapter orderAdapter;
-    private ArrayList<Order> orderList;
     private FirebaseFirestore db;
 
     @Nullable
@@ -43,8 +40,6 @@ public class AccountFragment extends Fragment {
         txtUsername = view.findViewById(R.id.txtProfileUsername);
         txtPhone = view.findViewById(R.id.txtProfilePhone);
         txtRole = view.findViewById(R.id.txtProfileRole);
-        txtHistoryTitle = view.findViewById(R.id.txtHistoryTitle);
-        rvOrderHistory = view.findViewById(R.id.rvOrderHistory);
         btnLogout = view.findViewById(R.id.btnLogout);
         layoutAdminTools = view.findViewById(R.id.layoutAdminTools);
         btnManageCategories = view.findViewById(R.id.btnManageCategories);
@@ -58,26 +53,20 @@ public class AccountFragment extends Fragment {
         int roleId = sp.getInt("roleid", 2);
 
         txtUsername.setText(username);
-        txtPhone.setText(phone);
+        txtPhone.setText(phone.isEmpty() ? "Đăng nhập Google/FB" : phone);
 
         if (roleId == 1) {
             txtRole.setText("Quản trị viên (Admin)");
             layoutAdminTools.setVisibility(View.VISIBLE);
-            txtHistoryTitle.setVisibility(View.GONE);
-            rvOrderHistory.setVisibility(View.GONE);
         } else {
             txtRole.setText("Khách hàng (User)");
             layoutAdminTools.setVisibility(View.GONE);
-            txtHistoryTitle.setVisibility(View.VISIBLE);
-            rvOrderHistory.setVisibility(View.VISIBLE);
-            setupOrderHistory(phone);
         }
 
         btnManageCategories.setOnClickListener(v -> startActivity(new Intent(getContext(), CategoryListActivity.class)));
         btnManageOrders.setOnClickListener(v -> startActivity(new Intent(getContext(), AdminOrderListActivity.class)));
         btnManageUsers.setOnClickListener(v -> startActivity(new Intent(getContext(), AdminUserListActivity.class)));
         
-        // SỬA LỖI: Gọi hàm chuyển trang một cách an toàn
         btnManageBooks.setOnClickListener(v -> {
             if (getActivity() instanceof HomeActivity) {
                 ((HomeActivity) getActivity()).refreshToHome();
@@ -94,26 +83,5 @@ public class AccountFragment extends Fragment {
         });
 
         return view;
-    }
-
-    private void setupOrderHistory(String phone) {
-        orderList = new ArrayList<>();
-        orderAdapter = new OrderAdapter(getContext(), orderList);
-        rvOrderHistory.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvOrderHistory.setAdapter(orderAdapter);
-
-        db.collection("orders")
-                .whereEqualTo("userId", phone)
-                .orderBy("orderDate", Query.Direction.DESCENDING)
-                .addSnapshotListener((value, error) -> {
-                    if (value != null) {
-                        orderList.clear();
-                        for (QueryDocumentSnapshot doc : value) {
-                            Order order = doc.toObject(Order.class);
-                            orderList.add(order);
-                        }
-                        orderAdapter.notifyDataSetChanged();
-                    }
-                });
     }
 }

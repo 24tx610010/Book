@@ -6,10 +6,7 @@ public class CartItem implements Serializable {
     private String bookId;
     private String bookName;
     private double unitPrice;
-<<<<<<< HEAD
-=======
     private double originalPrice;
->>>>>>> 0d5c59f (22/3)
     private int quantity;
     private String image;
     private String description;
@@ -17,15 +14,6 @@ public class CartItem implements Serializable {
     private String publisher;
     private String year;
     private String language;
-<<<<<<< HEAD
-
-    public CartItem() {}
-
-    public CartItem(String bookId, String bookName, double unitPrice, int quantity, String image, String description, String author, String publisher, String year, String language) {
-        this.bookId = bookId;
-        this.bookName = bookName;
-        this.unitPrice = unitPrice;
-=======
     private String categoryId; // Thêm trường này
     private boolean isSelected = true;
 
@@ -36,7 +24,6 @@ public class CartItem implements Serializable {
         this.bookName = bookName;
         this.unitPrice = unitPrice;
         this.originalPrice = originalPrice;
->>>>>>> 0d5c59f (22/3)
         this.quantity = quantity;
         this.image = image;
         this.description = description;
@@ -44,10 +31,7 @@ public class CartItem implements Serializable {
         this.publisher = publisher;
         this.year = year;
         this.language = language;
-<<<<<<< HEAD
-=======
         this.categoryId = categoryId;
->>>>>>> 0d5c59f (22/3)
     }
 
     public String getBookId() { return bookId; }
@@ -59,12 +43,9 @@ public class CartItem implements Serializable {
     public double getUnitPrice() { return unitPrice; }
     public void setUnitPrice(double unitPrice) { this.unitPrice = unitPrice; }
 
-<<<<<<< HEAD
-=======
     public double getOriginalPrice() { return originalPrice; }
     public void setOriginalPrice(double originalPrice) { this.originalPrice = originalPrice; }
 
->>>>>>> 0d5c59f (22/3)
     public int getQuantity() { return quantity; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
 
@@ -86,15 +67,12 @@ public class CartItem implements Serializable {
     public String getLanguage() { return language; }
     public void setLanguage(String language) { this.language = language; }
 
-<<<<<<< HEAD
-=======
     public String getCategoryId() { return categoryId; }
     public void setCategoryId(String categoryId) { this.categoryId = categoryId; }
 
     public boolean isSelected() { return isSelected; }
     public void setSelected(boolean selected) { isSelected = selected; }
 
->>>>>>> 0d5c59f (22/3)
     public double getTotalPrice() {
         return unitPrice * quantity;
     }

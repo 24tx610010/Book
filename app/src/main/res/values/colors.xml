@@ -3,42 +3,23 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-<<<<<<< HEAD
-    <!-- MÀU CHỦ ĐẠO (PRIMARY) - Màu Tím Hiện Đại -->
-    <color name="colorPrimary">#6A11CB</color>
-    <color name="colorPrimaryDark">#4A0E99</color>
-    <color name="colorAccent">#FF4081</color>
+    <!-- MÀU CHỦ ĐẠO (PRIMARY) - Màu Đỏ -->
+    <color name="colorPrimary">#E53935</color>
+    <color name="colorPrimaryDark">#C62828</color>
+    <color name="colorAccent">#FF5252</color>
 
     <!-- MÀU PHỤ (SECONDARY) -->
-    <color name="colorSecondary">#9C27B0</color>
-    <color name="colorBackground">#F8F5FF</color>
+    <color name="colorSecondary">#EF5350</color>
+    <color name="colorBackground">#FFF5F5</color>
 
     <!-- MÀU VĂN BẢN -->
     <color name="textPrimary">#2D2D2D</color>
-=======
-    <!-- MÀU CHỦ ĐẠO (PRIMARY) - Màu Đỏ -->
-    <color name="colorPrimary">#C62828</color>
-    <color name="colorPrimaryDark">#B71C1C</color>
-    <color name="colorAccent">#FFEB3B</color>
-
-    <!-- MÀU PHỤ (SECONDARY) -->
-    <color name="colorSecondary">#E57373</color>
-    <color name="colorBackground">#F5F5F5</color>
-
-    <!-- MÀU VĂN BẢN -->
-    <color name="textPrimary">#212121</color>
->>>>>>> 0d5c59f (22/3)
     <color name="textSecondary">#757575</color>
 
     <!-- MÀU TRẠNG THÁI -->
     <color name="success">#4CAF50</color>
-<<<<<<< HEAD
     <color name="error">#E53935</color>
     <color name="warning">#FFB300</color>
-=======
-    <color name="error">#F44336</color>
-    <color name="warning">#FF9800</color>
 
     <color name="facebook_blue">#1877F2</color>
->>>>>>> 0d5c59f (22/3)
 </resources>

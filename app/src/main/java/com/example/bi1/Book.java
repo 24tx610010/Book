@@ -1,25 +1,18 @@
 package com.example.bi1;
 
+import com.google.firebase.firestore.PropertyName;
 import java.io.Serializable;
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
 import java.util.List;
->>>>>>> 0d5c59f (22/3)
 
 public class Book implements Serializable {
     private String Id;
     private String TenSach;
-<<<<<<< HEAD
-    private double GiaBan;
-    private String HinhAnh;
-=======
-    private double GiaGoc; // Giá gốc ban đầu
-    private double GiaBan; // Giá đã khuyến mãi
-    private int khuyenMai; // Phần trăm khuyến mãi (ví dụ: 10)
+    private double GiaGoc; 
+    private double GiaBan; 
+    private int khuyenMai; 
     private String HinhAnh;
     private List<String> hinhAnhChiTiet;
->>>>>>> 0d5c59f (22/3)
     private String MaLoaiSach;
     private String MoTa;
     private int SoLuong;
@@ -31,63 +24,81 @@ public class Book implements Serializable {
     private float rating;
     private boolean isNoiBat;
 
-<<<<<<< HEAD
-    public Book() {}
-=======
     public Book() {
         hinhAnhChiTiet = new ArrayList<>();
     }
->>>>>>> 0d5c59f (22/3)
 
     public String getId() { return Id; }
     public void setId(String id) { Id = id; }
+
+    @PropertyName("TenSach")
     public String getTenSach() { return TenSach; }
+    @PropertyName("TenSach")
     public void setTenSach(String tenSach) { TenSach = tenSach; }
-<<<<<<< HEAD
-    public double getGiaBan() { return GiaBan; }
-    public void setGiaBan(double giaBan) { GiaBan = giaBan; }
-    public String getHinhAnh() { return HinhAnh; }
-    public void setHinhAnh(String hinhAnh) { HinhAnh = hinhAnh; }
-=======
     
+    @PropertyName("GiaGoc")
     public double getGiaGoc() { return GiaGoc; }
+    @PropertyName("GiaGoc")
     public void setGiaGoc(double giaGoc) { GiaGoc = giaGoc; }
     
+    @PropertyName("GiaBan")
     public double getGiaBan() { return GiaBan; }
+    @PropertyName("GiaBan")
     public void setGiaBan(double giaBan) { GiaBan = giaBan; }
 
     public int getKhuyenMai() { return khuyenMai; }
     public void setKhuyenMai(int khuyenMai) { this.khuyenMai = khuyenMai; }
     
+    @PropertyName("HinhAnh")
     public String getHinhAnh() { return HinhAnh; }
+    @PropertyName("HinhAnh")
     public void setHinhAnh(String hinhAnh) { HinhAnh = hinhAnh; }
+
     public List<String> getHinhAnhChiTiet() { return hinhAnhChiTiet; }
     public void setHinhAnhChiTiet(List<String> hinhAnhChiTiet) { this.hinhAnhChiTiet = hinhAnhChiTiet; }
->>>>>>> 0d5c59f (22/3)
+
+    @PropertyName("MaLoaiSach")
     public String getMaLoaiSach() { return MaLoaiSach; }
+    @PropertyName("MaLoaiSach")
     public void setMaLoaiSach(String maLoaiSach) { MaLoaiSach = maLoaiSach; }
+
+    @PropertyName("MoTa")
     public String getMoTa() { return MoTa; }
+    @PropertyName("MoTa")
     public void setMoTa(String moTa) { MoTa = moTa; }
+
+    @PropertyName("SoLuong")
     public int getSoLuong() { return SoLuong; }
+    @PropertyName("SoLuong")
     public void setSoLuong(int soLuong) { SoLuong = soLuong; }
+
+    @PropertyName("TacGia")
     public String getTacGia() { return TacGia; }
+    @PropertyName("TacGia")
     public void setTacGia(String tacGia) { this.TacGia = tacGia; }
+
+    @PropertyName("NhaXuatBan")
     public String getNhaXuatBan() { return NhaXuatBan; }
+    @PropertyName("NhaXuatBan")
     public void setNhaXuatBan(String nhaXuatBan) { this.NhaXuatBan = nhaXuatBan; }
+
+    @PropertyName("NamXuatBan")
     public String getNamXuatBan() { return NamXuatBan; }
+    @PropertyName("NamXuatBan")
     public void setNamXuatBan(String namXuatBan) { this.NamXuatBan = namXuatBan; }
+
+    @PropertyName("NgonNgu")
     public String getNgonNgu() { return NgonNgu; }
+    @PropertyName("NgonNgu")
     public void setNgonNgu(String ngonNgu) { this.NgonNgu = ngonNgu; }
+
     public int getLuotBan() { return luotBan; }
     public void setLuotBan(int luotBan) { this.luotBan = luotBan; }
     public float getRating() { return rating; }
     public void setRating(float rating) { this.rating = rating; }
     public boolean isNoiBat() { return isNoiBat; }
     public void setNoiBat(boolean noiBat) { isNoiBat = noiBat; }
-<<<<<<< HEAD
-=======
 
-    // Tính phần trăm giảm giá (ưu tiên lấy từ thuộc tính khuyenMai nếu có, nếu không tính từ GiaGoc/GiaBan)
     public int getDiscountPercent() {
         if (khuyenMai > 0) return khuyenMai;
         if (GiaGoc > 0 && GiaGoc > GiaBan) {
@@ -95,5 +106,4 @@ public class Book implements Serializable {
         }
         return 0;
     }
->>>>>>> 0d5c59f (22/3)
 }

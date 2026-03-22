@@ -30,7 +30,7 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,145 +42,60 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- THIẾT LẬP KHUYẾN MÃI -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="2dp">
-
+                app:cardElevation="2dp"
+                android:layout_marginBottom="24dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:padding="16dp">
-
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Thiết lập Khuyến mãi"
+                        android:text="Tạo chương trình mới"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <!-- CHỌN LOẠI HÌNH -->
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Loại hình áp dụng"
                         android:textStyle="bold" />
                     <RadioGroup
                         android:id="@+id/rgApplyMethod"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="8dp">
-                        <RadioButton
-                            android:id="@+id/rbDirectDiscount"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Giảm giá trực tiếp"
-                            android:checked="true" />
-                        <RadioButton
-                            android:id="@+id/rbVoucherCode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
-                            android:text="Mã Voucher" />
+                        android:layout_marginTop="12dp">
+                        <RadioButton android:id="@+id/rbDirectDiscount" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Giảm trực tiếp" android:checked="true" />
+                        <RadioButton android:id="@+id/rbVoucherCode" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:text="Mã Voucher" />
                     </RadioGroup>
-
-                    <EditText
-                        android:id="@+id/edtPromoCode"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/bg_input"
-                        android:hint="Nhập mã (VD: GIAM50)"
-                        android:paddingHorizontal="12dp"
-                        android:visibility="gone" />
-
-                    <EditText
-                        android:id="@+id/edtPromoValue"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="12dp"
-                        android:background="@drawable/bg_input"
-                        android:hint="Giá trị giảm (%)"
-                        android:inputType="number"
-                        android:paddingHorizontal="12dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Phạm vi áp dụng"
-                        android:textStyle="bold" />
-
-                    <RadioGroup
-                        android:id="@+id/rgPromoType"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
+                    <EditText android:id="@+id/edtPromoCode" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="8dp" android:background="@drawable/bg_input" android:hint="Nhập mã (VD: TET2024)" android:paddingHorizontal="12dp" android:visibility="gone" />
+                    <EditText android:id="@+id/edtPromoValue" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="8dp" android:background="@drawable/bg_input" android:hint="Phần trăm giảm (%)" android:inputType="number" android:paddingHorizontal="12dp" />
+                    <RadioGroup android:id="@+id/rgPromoType" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:orientation="horizontal">
                         <RadioButton android:id="@+id/rbAll" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tất cả" android:checked="true" />
-                        <RadioButton android:id="@+id/rbByCategory" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:text="Theo Loại" />
-                        <RadioButton android:id="@+id/rbByBook" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:text="Theo Sách" />
+                        <RadioButton android:id="@+id/rbByCategory" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="Theo Loại" />
+                        <RadioButton android:id="@+id/rbByBook" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="8dp" android:text="Theo Sách" />
                     </RadioGroup>
-
-                    <Spinner
-                        android:id="@+id/spnPromoTarget"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="8dp"
-                        android:background="@drawable/bg_input"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Thời gian áp dụng"
-                        android:textStyle="bold" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:orientation="horizontal">
-                        <Button android:id="@+id/btnStartDate" style="?attr/borderlessButtonStyle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Bắt đầu" android:textColor="#333333" android:background="@drawable/bg_input" />
-                        <View android:layout_width="12dp" android:layout_height="1dp" />
-                        <Button android:id="@+id/btnEndDate" style="?attr/borderlessButtonStyle" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Kết thúc" android:textColor="#333333" android:background="@drawable/bg_input" />
+                    <Spinner android:id="@+id/spnPromoTarget" android:layout_width="match_parent" android:layout_height="50dp" android:layout_marginTop="8dp" android:background="@drawable/bg_input" android:visibility="gone" />
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp" android:orientation="horizontal">
+                        <Button android:id="@+id/btnStartDate" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Bắt đầu" android:backgroundTint="#EEEEEE" android:textColor="#333333" />
+                        <View android:layout_width="8dp" android:layout_height="1dp" />
+                        <Button android:id="@+id/btnEndDate" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Kết thúc" android:backgroundTint="#EEEEEE" android:textColor="#333333" />
                     </LinearLayout>
-
-                    <Button
-                        android:id="@+id/btnAddPromo"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:layout_marginTop="24dp"
-                        android:backgroundTint="@color/colorPrimary"
-                        android:text="ÁP DỤNG KHUYẾN MÃI"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
-
+                    <Button android:id="@+id/btnAddPromo" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginTop="16dp" android:text="ÁP DỤNG" android:textStyle="bold" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="CÁC CHƯƠNG TRÌNH ĐANG CHẠY"
-                android:textStyle="bold"
-                android:textColor="#666666" />
-
+            <!-- DANH SÁCH KHUYẾN MÃI -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CÁC CHƯƠNG TRÌNH ĐANG CHẠY" android:textStyle="bold" android:textColor="#666666" android:layout_marginBottom="8dp"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPromotions"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:nestedScrollingEnabled="false" />
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="24dp"/>
 
         </LinearLayout>
-    </ScrollView>
-
+    </androidx.core.widget.NestedScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

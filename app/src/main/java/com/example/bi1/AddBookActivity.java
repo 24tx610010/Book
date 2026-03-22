@@ -20,7 +20,7 @@ import java.util.Map;
 
 public class AddBookActivity extends AppCompatActivity {
 
-    private EditText edtName, edtPrice, edtBookDesc, edtBookImage, edtAuthor, edtPublisher, edtYear, edtLanguage, edtStock;
+    private EditText edtName, edtPrice, edtOriginalPrice, edtBookDesc, edtBookImage, edtAuthor, edtPublisher, edtYear, edtLanguage, edtStock;
     private Spinner spCategory;
     private Button btnSave;
     private ImageButton btnBack;
@@ -28,6 +28,7 @@ public class AddBookActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     
     private String bookId = null;
+    private String oldCategoryId = null;
     private ArrayList<Category> categoryList;
     private ArrayAdapter<Category> categoryAdapter;
 
@@ -41,6 +42,7 @@ public class AddBookActivity extends AppCompatActivity {
         // Ánh xạ
         btnBack = findViewById(R.id.btnBack);
         edtName = findViewById(R.id.edtBookName);
+        edtOriginalPrice = findViewById(R.id.edtOriginalPrice);
         edtPrice = findViewById(R.id.edtBookPrice);
         edtStock = findViewById(R.id.edtStock);
         edtAuthor = findViewById(R.id.edtAuthor);
@@ -59,29 +61,34 @@ public class AddBookActivity extends AppCompatActivity {
         categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spCategory.setAdapter(categoryAdapter);
 
-        // Tải danh sách loại sách từ Firebase
-        loadCategories();
-
         // Nút quay lại
         btnBack.setOnClickListener(v -> finish());
 
         // Kiểm tra xem là thêm mới hay sửa
-        if (getIntent().hasExtra("bookId")) {
-            bookId = getIntent().getStringExtra("bookId");
-            txtTitle.setText("CẬP NHẬT SÁCH");
-            
-            edtName.setText(getIntent().getStringExtra("name"));
-            edtPrice.setText(String.valueOf(getIntent().getDoubleExtra("price", 0)));
-            edtStock.setText(String.valueOf(getIntent().getIntExtra("stock", 0)));
-            edtAuthor.setText(getIntent().getStringExtra("author"));
-            edtPublisher.setText(getIntent().getStringExtra("publisher"));
-            edtYear.setText(getIntent().getStringExtra("year"));
-            edtLanguage.setText(getIntent().getStringExtra("language"));
-            edtBookImage.setText(getIntent().getStringExtra("image"));
-            edtBookDesc.setText(getIntent().getStringExtra("desc"));
-            
-            btnSave.setText("CẬP NHẬT NGAY");
+        if (getIntent().hasExtra("BOOK_DATA")) {
+            Book book = (Book) getIntent().getSerializableExtra("BOOK_DATA");
+            if (book != null) {
+                bookId = book.getId();
+                oldCategoryId = book.getMaLoaiSach();
+                txtTitle.setText("CẬP NHẬT SÁCH");
+                
+                edtName.setText(book.getTenSach());
+                edtOriginalPrice.setText(String.valueOf(book.getGiaGoc()));
+                edtPrice.setText(String.valueOf(book.getGiaBan()));
+                edtStock.setText(String.valueOf(book.getSoLuong()));
+                edtAuthor.setText(book.getTacGia());
+                edtPublisher.setText(book.getNhaXuatBan());
+                edtYear.setText(book.getNamXuatBan());
+                edtLanguage.setText(book.getNgonNgu());
+                edtBookImage.setText(book.getHinhAnh());
+                edtBookDesc.setText(book.getMoTa());
+                
+                btnSave.setText("CẬP NHẬT NGAY");
+            }
         }
+
+        // Tải danh sách loại sách từ Firebase
+        loadCategories();
 
         btnSave.setOnClickListener(v -> saveBook());
     }
@@ -99,10 +106,9 @@ public class AddBookActivity extends AppCompatActivity {
                     categoryAdapter.notifyDataSetChanged();
                     
                     // Nếu là sửa, chọn lại đúng loại sách cũ
-                    if (bookId != null && getIntent().hasExtra("categoryId")) {
-                        String oldCatId = getIntent().getStringExtra("categoryId");
+                    if (oldCategoryId != null) {
                         for (int i = 0; i < categoryList.size(); i++) {
-                            if (categoryList.get(i).getId().equals(oldCatId)) {
+                            if (categoryList.get(i).getId().equals(oldCategoryId)) {
                                 spCategory.setSelection(i);
                                 break;
                             }
@@ -114,6 +120,7 @@ public class AddBookActivity extends AppCompatActivity {
 
     private void saveBook() {
         String name = edtName.getText().toString().trim();
+        String originalPriceStr = edtOriginalPrice.getText().toString().trim();
         String priceStr = edtPrice.getText().toString().trim();
         String stockStr = edtStock.getText().toString().trim();
         String author = edtAuthor.getText().toString().trim();
@@ -133,10 +140,11 @@ public class AddBookActivity extends AppCompatActivity {
             return;
         }
 
-        double price;
+        double price, originalPrice;
         int stock;
         try {
             price = Double.parseDouble(priceStr);
+            originalPrice = originalPriceStr.isEmpty() ? price : Double.parseDouble(originalPriceStr);
             stock = Integer.parseInt(stockStr);
         } catch (Exception e) {
             Toast.makeText(this, "Giá hoặc số lượng không hợp lệ", Toast.LENGTH_SHORT).show();
@@ -149,6 +157,7 @@ public class AddBookActivity extends AppCompatActivity {
 
         Map<String, Object> book = new HashMap<>();
         book.put("TenSach", name);
+        book.put("GiaGoc", originalPrice);
         book.put("GiaBan", price);
         book.put("SoLuong", stock);
         book.put("TacGia", author);
@@ -160,17 +169,25 @@ public class AddBookActivity extends AppCompatActivity {
         book.put("MaLoaiSach", categoryId);
 
         if (bookId == null) {
+            // Khởi tạo các giá trị mặc định cho sách mới
+            book.put("luotBan", 0);
+            book.put("rating", 5.0f);
+            book.put("isNoiBat", false);
+            book.put("khuyenMai", 0);
+            
             db.collection("books").add(book)
                     .addOnSuccessListener(ref -> {
                         Toast.makeText(this, "Thêm thành công!", Toast.LENGTH_SHORT).show();
                         finish();
-                    });
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         } else {
-            db.collection("books").document(bookId).set(book)
+            db.collection("books").document(bookId).update(book)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(this, "Đã cập nhật!", Toast.LENGTH_SHORT).show();
                         finish();
-                    });
+                    })
+                    .addOnFailureListener(e -> Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
 }

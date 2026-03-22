@@ -14,14 +14,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TỔNG QUAN KINH DOANH"
+            android:text="THỐNG KÊ DOANH THU"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginBottom="24dp"/>
 
-        <!-- THẺ TỔNG DOANH THU -->
+        <!-- TỔNG DOANH THU -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,12 +32,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="20dp"
-                android:background="@color/white">
+                android:padding="20dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tổng doanh thu"
+                    android:text="Tổng doanh thu (Đã duyệt)"
                     android:textColor="#666666"
                     android:textSize="14sp"/>
                 <TextView
@@ -67,7 +66,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Doanh thu theo ngày"
+                    android:text="Biểu đồ doanh thu"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp"/>
                 <com.github.mikephil.charting.charts.BarChart
@@ -78,33 +77,62 @@
         </androidx.cardview.widget.CardView>
 
         <!-- SÁCH BÁN CHẠY -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sách bán chạy nhất"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="#333333"/>
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
-            app:cardElevation="4dp">
-            <LinearLayout
+            app:cardElevation="2dp"
+            android:layout_marginBottom="24dp">
+            <TextView
+                android:id="@+id/txtBestSeller"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Sách bán chạy nhất"
-                    android:textColor="#666666"
-                    android:textSize="14sp"/>
-                <TextView
-                    android:id="@+id/txtBestSeller"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Đang cập nhật..."
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"/>
-            </LinearLayout>
+                android:padding="16dp"
+                android:text="Đang cập nhật..."
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
         </androidx.cardview.widget.CardView>
+
+        <!-- DANH SÁCH ĐƠN THÀNH CÔNG -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đơn hàng thành công (Đã duyệt)"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="#4CAF50"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSuccessOrders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:layout_marginBottom="24dp"/>
+
+        <!-- DANH SÁCH ĐƠN ĐÃ HỦY -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đơn hàng đã hủy"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp"
+            android:textColor="#F44336"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvCancelledOrders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:layout_marginBottom="16dp"/>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

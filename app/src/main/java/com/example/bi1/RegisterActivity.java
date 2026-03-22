@@ -1,8 +1,8 @@
 package com.example.bi1;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,6 +17,7 @@ import java.util.UUID;
 
 public class RegisterActivity extends AppCompatActivity {
 
+    private static final String TAG = "RegisterActivity";
     EditText edtPhone, edtPassword, edtConfirmPassword, edtFullName;
     Button btnRegister;
     ImageButton btnBack;
@@ -73,28 +74,44 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Tạo đối tượng User mới để lưu lên Firebase
-        String userId = UUID.randomUUID().toString().substring(0, 8);
-        User newUser = new User(userId, phone, fullName, password, 2); // 2 là mặc định User
+        btnRegister.setEnabled(false);
+        btnRegister.setText("Đang xử lý...");
 
-        // LƯU LÊN FIREBASE CLOUD
+        // Kiểm tra xem số điện thoại đã tồn tại chưa
+        db.collection("users").document(phone).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        Toast.makeText(RegisterActivity.this, "Số điện thoại này đã được đăng ký!", Toast.LENGTH_SHORT).show();
+                        btnRegister.setEnabled(true);
+                        btnRegister.setText("REGISTER");
+                    } else {
+                        // Thực hiện đăng ký nếu chưa tồn tại
+                        performRegistration(phone, fullName, password);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Lỗi kiểm tra: ", e);
+                    Toast.makeText(RegisterActivity.this, "Lỗi kiểm tra tài khoản: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    btnRegister.setEnabled(true);
+                    btnRegister.setText("REGISTER");
+                });
+    }
+
+    private void performRegistration(String phone, String fullName, String password) {
+        String userId = UUID.randomUUID().toString().substring(0, 8);
+        User newUser = new User(userId, phone, fullName, password, 2); // 2: User
+
         db.collection("users").document(phone).set(newUser)
                 .addOnSuccessListener(aVoid -> {
-                    // Lưu vào máy để dùng cho Login/Profile
-                    SharedPreferences sp = getSharedPreferences("auth", MODE_PRIVATE);
-                    sp.edit()
-                            .putString("phone", phone)
-                            .putString("username", fullName) // Lưu họ tên vào làm username hiển thị
-                            .putString("password", password)
-                            .putInt("roleid", 2)
-                            .apply();
-
-                    Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Đăng ký thành công! Hãy đăng nhập.", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                     finish();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(this, "Lỗi đăng ký: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Lỗi đăng ký: ", e);
+                    Toast.makeText(RegisterActivity.this, "Lỗi đăng ký: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    btnRegister.setEnabled(true);
+                    btnRegister.setText("REGISTER");
                 });
     }
 }

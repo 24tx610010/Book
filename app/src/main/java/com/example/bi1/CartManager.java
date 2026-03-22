@@ -51,45 +51,41 @@ public class CartManager {
         }
     }
 
-    // TỔNG TIỀN HÀNG (Dựa trên GIÁ GỐC để hiển thị chưa giảm)
+    // TỔNG TIỀN HÀNG (Dựa trên GIÁ BÁN hiện tại của sách)
     public static double getSubtotal() {
         double total = 0;
         for (CartItem item : cartList) {
             if (item.isSelected()) {
-                total += item.getOriginalPrice() * item.getQuantity();
+                total += item.getUnitPrice() * item.getQuantity();
             }
         }
         return total;
     }
 
-    // TỔNG SỐ TIỀN ĐƯỢC GIẢM (Giảm giá trực tiếp + Giảm giá số lượng)
+    // TỔNG SỐ TIỀN ĐƯỢC GIẢM THÊM (Ví dụ: giảm theo số lượng món đồ trong giỏ)
     public static double getDiscountAmount() {
-        double itemDiscount = 0;
         int totalQty = 0;
-        double subtotalAfterItemDiscount = 0;
+        double subtotal = 0;
 
         for (CartItem item : cartList) {
             if (item.isSelected()) {
-                // Giảm giá trực tiếp của từng cuốn sách
-                itemDiscount += (item.getOriginalPrice() - item.getUnitPrice()) * item.getQuantity();
-                
                 totalQty += item.getQuantity();
-                subtotalAfterItemDiscount += item.getUnitPrice() * item.getQuantity();
+                subtotal += item.getUnitPrice() * item.getQuantity();
             }
         }
 
         // Giảm giá tự động theo số lượng (5% cho 2 món, 6% cho >=3 món)
         double qtyDiscount = 0;
         if (totalQty == 2) {
-            qtyDiscount = subtotalAfterItemDiscount * 0.05;
+            qtyDiscount = subtotal * 0.05;
         } else if (totalQty >= 3) {
-            qtyDiscount = subtotalAfterItemDiscount * 0.06;
+            qtyDiscount = subtotal * 0.06;
         }
 
-        return itemDiscount + qtyDiscount;
+        return qtyDiscount;
     }
 
-    // TỔNG TIỀN CUỐI CÙNG SAU KHI TRỪ TẤT CẢ GIẢM GIÁ
+    // TỔNG TIỀN CUỐI CÙNG
     public static double getTotalPrice() {
         double finalTotal = getSubtotal() - getDiscountAmount();
         return Math.max(0, finalTotal);

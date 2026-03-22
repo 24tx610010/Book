@@ -23,11 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Book> bookList;
 
     TextView txtWelcome;
-<<<<<<< HEAD
     Button btnDetail, btnProfile;
-=======
-    Button btnDetail;
->>>>>>> 0d5c59f (22/3)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         txtWelcome = findViewById(R.id.txtWelcome);
         btnDetail = findViewById(R.id.btnDetail);
-<<<<<<< HEAD
         btnProfile = findViewById(R.id.btnProfile);
-=======
->>>>>>> 0d5c59f (22/3)
 
         SharedPreferences sp = getSharedPreferences("auth", MODE_PRIVATE);
 
@@ -56,28 +49,17 @@ public class MainActivity extends AppCompatActivity {
 
             Intent i = new Intent(MainActivity.this, DetailActivity.class);
 
-<<<<<<< HEAD
-            i.putExtra("TenSach", "Sản Phẩm Demo");
-            i.putExtra("GiaBan", 500000.0);
-            i.putExtra("MoTa", "Đây là sản phẩm demo");
-            i.putExtra("HinhAnh",
-=======
             i.putExtra("name", "Sản Phẩm Demo");
             i.putExtra("price", "500000");
             i.putExtra("desc", "Đây là sản phẩm demo");
-            i.putExtra("image",
->>>>>>> 0d5c59f (22/3)
-                    "https://images-na.ssl-images-amazon.com/images/I/51NKhnjhpGL.jpg");
+            i.putExtra("image", "https://images-na.ssl-images-amazon.com/images/I/51NKhnjhpGL.jpg");
 
             startActivity(i);
         });
 
-<<<<<<< HEAD
         btnProfile.setOnClickListener(v ->
                 startActivity(new Intent(this, ProfileActivity.class)));
 
-=======
->>>>>>> 0d5c59f (22/3)
         firestore = FirebaseFirestore.getInstance();
         bookList = new ArrayList<>();
 
@@ -117,8 +99,4 @@ public class MainActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                 });
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 0d5c59f (22/3)

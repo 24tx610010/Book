@@ -1,29 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".LoginActivity">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bg_login" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#66000000" />
-=======
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#F5F5F5">
 
-    <!-- Header màu đỏ -->
+    <!-- Header -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -79,114 +62,20 @@
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
->>>>>>> 0d5c59f (22/3)
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-<<<<<<< HEAD
-        android:fillViewport="true">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="24dp">
-=======
         android:padding="24dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
->>>>>>> 0d5c59f (22/3)
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-<<<<<<< HEAD
-                android:text="Book Store"
-                android:textColor="@android:color/white"
-                android:textSize="28sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Đăng nhập để tiếp tục"
-                android:textColor="#EDEDED"
-                android:textSize="16sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:background="@drawable/bg_glass_card"
-                android:elevation="6dp"
-                android:orientation="vertical"
-                android:padding="24dp">
-
-                <EditText
-                    android:id="@+id/edtUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@drawable/bg_rounded_input"
-                    android:hint="Username"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="#DDFFFFFF" />
-
-                <EditText
-                    android:id="@+id/edtPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@drawable/bg_rounded_input"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:textColor="@android:color/white"
-                    android:textColorHint="#DDFFFFFF" />
-
-                <TextView
-                    android:id="@+id/txtForgotPassword"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="8dp"
-                    android:text="Quên mật khẩu?"
-                    android:textColor="#FFFFFF"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btnLogin"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_btn_login"
-                    android:text="ĐĂNG NHẬP"
-                    android:textAllCaps="false"
-                    android:textColor="#3D2A1F"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btnGoRegister"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="14dp"
-                    android:background="@drawable/bg_btn_register"
-                    android:text="Chưa có tài khoản? Đăng ký"
-                    android:textAllCaps="false"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold" />
-
-=======
                 android:text="Email / Số điện thoại"
                 android:textStyle="bold"
                 android:textColor="#333333" />
@@ -248,11 +137,24 @@
                 android:textColor="#CCCCCC" />
 
             <Button
-                android:id="@+id/btnFacebook"
+                android:id="@+id/btnGoogle"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/facebook_blue"
+                android:backgroundTint="#FFFFFF"
+                android:text="Tiếp tục với Google"
+                android:textColor="#757575"
+                android:textAllCaps="false"
+                app:icon="@android:drawable/ic_menu_search"
+                app:iconGravity="textStart"
+                app:iconTint="@null" />
+
+            <Button
+                android:id="@+id/btnFacebook"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#1877F2"
                 android:text="Đăng nhập bằng Facebook"
                 android:textColor="#FFFFFF"
                 android:textAllCaps="false" />
@@ -284,14 +186,8 @@
                     android:text="Đăng ký tài khoản"
                     android:textColor="#FF9800"
                     android:textStyle="bold" />
->>>>>>> 0d5c59f (22/3)
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-<<<<<<< HEAD
-
-</FrameLayout>
-=======
 </LinearLayout>
->>>>>>> 0d5c59f (22/3)

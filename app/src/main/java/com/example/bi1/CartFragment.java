@@ -1,12 +1,15 @@
 package com.example.bi1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +32,7 @@ public class CartFragment extends Fragment implements CartAdapter.OnCartChangeLi
 
     private RecyclerView rvCart;
     private TextView txtTotal, txtSubtotal, txtDiscount, txtEmpty, txtSelectCount, txtBuyMoreInfo;
+    private TextView txtCustomerInfo, txtAddressDisplay, btnChangeAddress;
     private CheckBox cbSelectAll;
     private ProgressBar pbVoucher;
     private View layoutBottom, btnViewPromotions;
@@ -36,6 +40,11 @@ public class CartFragment extends Fragment implements CartAdapter.OnCartChangeLi
     private CartAdapter adapter;
     private List<CartItem> cartItems;
     private FirebaseFirestore db;
+
+    private String currentReceiverName = "";
+    private String currentReceiverPhone = "";
+    private String currentDetailAddress = "";
+    private String userPhone = "";
 
     @Nullable
     @Override
@@ -56,6 +65,20 @@ public class CartFragment extends Fragment implements CartAdapter.OnCartChangeLi
         btnCheckout = view.findViewById(R.id.btnCheckoutFragment);
         btnBuyMore = view.findViewById(R.id.btnBuyMore);
         btnViewPromotions = view.findViewById(R.id.btnViewPromotions);
+        
+        txtCustomerInfo = view.findViewById(R.id.txtCustomerInfo);
+        txtAddressDisplay = view.findViewById(R.id.txtAddressDisplay);
+        btnChangeAddress = view.findViewById(R.id.btnChangeAddress);
+
+        // Lấy thông tin người dùng hiện tại
+        SharedPreferences sp = getActivity().getSharedPreferences("auth", Context.MODE_PRIVATE);
+        userPhone = sp.getString("phone", "");
+        currentReceiverName = sp.getString("username", "");
+        currentReceiverPhone = userPhone;
+        
+        loadSavedAddress();
+
+        btnChangeAddress.setOnClickListener(v -> showAddressDialog());
 
         cartItems = CartManager.getCartList();
         adapter = new CartAdapter(getContext(), cartItems, this);
@@ -102,17 +125,92 @@ public class CartFragment extends Fragment implements CartAdapter.OnCartChangeLi
                 Toast.makeText(getContext(), "Vui lòng chọn ít nhất 1 sản phẩm!", Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            if (currentDetailAddress.isEmpty()) {
+                Toast.makeText(getContext(), "Vui lòng nhập địa chỉ nhận hàng!", Toast.LENGTH_SHORT).show();
+                showAddressDialog();
+                return;
+            }
+
             showPaymentDialog();
         });
 
         return view;
     }
 
+    private void loadSavedAddress() {
+        if (getActivity() == null) return;
+        SharedPreferences sp = getActivity().getSharedPreferences("auth", Context.MODE_PRIVATE);
+        currentReceiverName = sp.getString("ship_name", currentReceiverName);
+        currentReceiverPhone = sp.getString("ship_phone", currentReceiverPhone);
+        currentDetailAddress = sp.getString("ship_address", "");
+
+        updateAddressUI();
+    }
+
+    private void updateAddressUI() {
+        if (txtCustomerInfo != null) txtCustomerInfo.setText(currentReceiverName + " | " + currentReceiverPhone);
+        if (txtAddressDisplay != null) {
+            if (!currentDetailAddress.isEmpty()) {
+                txtAddressDisplay.setText(currentDetailAddress);
+            } else {
+                txtAddressDisplay.setText("Vui lòng cập nhật địa chỉ giao hàng");
+            }
+        }
+    }
+
+    private void showAddressDialog() {
+        if (getContext() == null) return;
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.dialog_change_address, null);
+        
+        final EditText edtName = view.findViewById(R.id.edtReceiverName);
+        final EditText edtPhone = view.findViewById(R.id.edtReceiverPhone);
+        final EditText edtAddress = view.findViewById(R.id.edtNewAddress);
+
+        edtName.setText(currentReceiverName);
+        edtPhone.setText(currentReceiverPhone);
+        edtAddress.setText(currentDetailAddress);
+        
+        builder.setView(view);
+        builder.setPositiveButton("XÁC NHẬN", (dialog, which) -> {
+            String name = edtName.getText().toString().trim();
+            String phone = edtPhone.getText().toString().trim();
+            String addr = edtAddress.getText().toString().trim();
+
+            if (name.isEmpty() || phone.isEmpty() || addr.isEmpty()) {
+                Toast.makeText(getContext(), "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            currentReceiverName = name;
+            currentReceiverPhone = phone;
+            currentDetailAddress = addr;
+
+            updateAddressUI();
+
+            // Lưu lại cho lần sau
+            if (getActivity() != null) {
+                getActivity().getSharedPreferences("auth", Context.MODE_PRIVATE).edit()
+                        .putString("ship_name", currentReceiverName)
+                        .putString("ship_phone", currentReceiverPhone)
+                        .putString("ship_address", currentDetailAddress)
+                        .apply();
+            }
+        });
+        builder.setNegativeButton("HỦY", null);
+        builder.show();
+    }
+
     private void showPaymentDialog() {
         if (getContext() == null) return;
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Thông tin thanh toán");
-        builder.setMessage("Vui lòng chuyển khoản vào STK:\n\nACB: 31568367\nNGUYEN VAN A");
+        builder.setTitle("Xác nhận đặt hàng");
+        builder.setMessage("Người nhận: " + currentReceiverName + " (" + currentReceiverPhone + ")" +
+                "\nĐịa chỉ: " + currentDetailAddress + 
+                "\nTổng tiền: " + String.format("%,.0f đ", CartManager.getTotalPrice()) + 
+                "\n\nBạn có chắc chắn muốn đặt hàng?");
+
         builder.setPositiveButton("XÁC NHẬN", (dialog, which) -> processCheckout());
         builder.setNegativeButton("HỦY", null);
         builder.show();
@@ -120,11 +218,23 @@ public class CartFragment extends Fragment implements CartAdapter.OnCartChangeLi
 
     private void processCheckout() {
         if (getActivity() == null) return;
-        String phone = getActivity().getSharedPreferences("auth", 0).getString("phone", "");
         String orderId = "ORD-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
         
         WriteBatch batch = db.batch();
-        Order newOrder = new Order(orderId, phone, new Date(), "Chuyển khoản ACB", CartManager.getTotalPrice(), 0);
+        
+        // Sử dụng constructor đầy đủ của Order để lưu thông tin người nhận và địa chỉ
+        Order newOrder = new Order(
+                orderId, 
+                userPhone, 
+                currentReceiverName, 
+                currentReceiverPhone, 
+                currentDetailAddress, 
+                new Date(), 
+                "COD", 
+                CartManager.getTotalPrice(), 
+                0
+        );
+
         batch.set(db.collection("orders").document(orderId), newOrder);
 
         for (int i = cartItems.size() - 1; i >= 0; i--) {

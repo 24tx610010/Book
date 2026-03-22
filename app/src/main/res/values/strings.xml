@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Bài1</string>
+    <string name="app_name">Bài 1 Android</string>
+    <string name="facebook_app_id">YOUR_FB_APP_ID</string>
+    <string name="fb_login_protocol_scheme">fbYOUR_FB_APP_ID</string>
+    <string name="facebook_client_token">YOUR_CLIENT_TOKEN</string>
+
+    <!-- WEB CLIENT ID ĐÃ CẬP NHẬT CHÍNH XÁC -->
+    <string name="default_web_client_id">395181298906-f4pbkh4bt9i70e9unokf86sd4v3j6mfb.apps.googleusercontent.com</string>
 </resources>

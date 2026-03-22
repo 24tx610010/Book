@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:background="#F8F9FA">
 
     <TextView
         android:id="@+id/txtOrderHistoryTitle"
@@ -11,29 +12,27 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:text="LỊCH SỬ ĐƠN HÀNG"
-        android:textColor="@color/colorPrimary"
+        android:textColor="#E53935"
         android:textSize="22sp"
         android:textStyle="bold" />
 
-    <RelativeLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayoutOrder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:tabIndicatorColor="#E53935"
+        app:tabSelectedTextColor="#E53935"
+        app:tabTextColor="#666666"
+        app:tabMode="fixed"
+        app:tabGravity="fill" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvOrderHistoryFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TextView
-            android:id="@+id/txtEmptyOrderHistory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Bạn chưa có đơn hàng nào"
-            android:textColor="#888888"
-            android:visibility="gone" />
-    </RelativeLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPagerOrder"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

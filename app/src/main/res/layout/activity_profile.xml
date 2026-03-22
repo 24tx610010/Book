@@ -103,9 +103,6 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
-<<<<<<< HEAD
-=======
-                <!-- NÚT QUẢN LÝ SÁCH MỚI -->
                 <Button
                     android:id="@+id/btnManageBooks"
                     android:layout_width="match_parent"
@@ -116,7 +113,6 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
->>>>>>> 0d5c59f (22/3)
                 <Button
                     android:id="@+id/btnManageOrders"
                     android:layout_width="match_parent"
@@ -126,11 +122,6 @@
                     android:text="QUẢN LÝ ĐƠN HÀNG"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
-<<<<<<< HEAD
-            </LinearLayout>
-
-            <!-- LỊCH SỬ MUA HÀNG (DÀNH CHO USER) -->
-=======
 
                 <Button
                     android:id="@+id/btnManageUsers"
@@ -144,7 +135,6 @@
             </LinearLayout>
 
             <!-- LỊCH SỬ MUA HÀNG -->
->>>>>>> 0d5c59f (22/3)
             <TextView
                 android:id="@+id/txtHistoryTitle"
                 android:layout_width="wrap_content"
@@ -168,7 +158,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="#666666"
-                android:text="ĐĂNG XUẤT"
+                android:text="ĐẶT XUẤT"
                 android:textStyle="bold" />
 
         </LinearLayout>

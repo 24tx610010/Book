@@ -1,12 +1,16 @@
 package com.example.bi1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,7 +18,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -27,6 +34,13 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore db;
     private EditText edtSearch;
     private int roleId;
+    private ListenerRegistration bookListener;
+
+    // UI cho Sách bán chạy
+    private View layoutBestSeller;
+    private ImageView imgBestSeller;
+    private TextView txtBestSellerName, txtBestSellerSold, txtBestSellerPrice;
+    private Button btnViewBestSeller;
 
     @Nullable
     @Override
@@ -37,6 +51,14 @@ public class HomeFragment extends Fragment {
         recyclerView = view.findViewById(R.id.rvHomeBooks);
         edtSearch = view.findViewById(R.id.edtSearchHome);
 
+        // Ánh xạ phần bán chạy
+        layoutBestSeller = view.findViewById(R.id.layoutBestSeller);
+        imgBestSeller = view.findViewById(R.id.imgBestSeller);
+        txtBestSellerName = view.findViewById(R.id.txtBestSellerName);
+        txtBestSellerSold = view.findViewById(R.id.txtBestSellerSold);
+        txtBestSellerPrice = view.findViewById(R.id.txtBestSellerPrice);
+        btnViewBestSeller = view.findViewById(R.id.btnViewBestSeller);
+
         if (getActivity() instanceof HomeActivity) {
             roleId = ((HomeActivity) getActivity()).getRoleId();
         }
@@ -44,11 +66,12 @@ public class HomeFragment extends Fragment {
         bookList = new ArrayList<>();
         adapter = new BookAdapter(getContext(), bookList, roleId);
         
-        // SỬA THÀNH GRIDLAYOUTMANAGER VỚI 2 CỘT
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         recyclerView.setAdapter(adapter);
 
-        loadAllBooks();
+        // Load dữ liệu
+        loadBestSellerBook();
+        loadBooks(null);
 
         edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -64,8 +87,45 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    private void loadAllBooks() {
-        db.collection("books").addSnapshotListener((value, error) -> {
+    private void loadBestSellerBook() {
+        db.collection("books")
+                .orderBy("luotBan", Query.Direction.DESCENDING)
+                .limit(1)
+                .addSnapshotListener((value, error) -> {
+                    if (value != null && !value.isEmpty()) {
+                        layoutBestSeller.setVisibility(View.VISIBLE);
+                        Book book = value.getDocuments().get(0).toObject(Book.class);
+                        book.setId(value.getDocuments().get(0).getId());
+
+                        txtBestSellerName.setText(book.getTenSach());
+                        txtBestSellerSold.setText("Đã bán: " + book.getLuotBan());
+                        txtBestSellerPrice.setText(String.format("%,.0f đ", book.getGiaBan()));
+
+                        if (book.getHinhAnh() != null && !book.getHinhAnh().isEmpty()) {
+                            Glide.with(this).load(book.getHinhAnh()).into(imgBestSeller);
+                        }
+
+                        btnViewBestSeller.setOnClickListener(v -> {
+                            Intent intent = new Intent(getContext(), DetailActivity.class);
+                            intent.putExtra("book", book);
+                            startActivity(intent);
+                        });
+                    } else {
+                        layoutBestSeller.setVisibility(View.GONE);
+                    }
+                });
+    }
+
+    private void loadBooks(String categoryId) {
+        if (bookListener != null) bookListener.remove();
+
+        Query query = db.collection("books");
+        
+        if (categoryId != null && !categoryId.isEmpty()) {
+            query = query.whereEqualTo("MaLoaiSach", categoryId);
+        }
+
+        bookListener = query.addSnapshotListener((value, error) -> {
             if (value != null) {
                 bookList.clear();
                 for (QueryDocumentSnapshot doc : value) {
@@ -79,14 +139,16 @@ public class HomeFragment extends Fragment {
     }
     
     public void filterByCategory(String categoryId) {
-        db.collection("books").whereEqualTo("MaLoaiSach", categoryId).get().addOnSuccessListener(value -> {
-            bookList.clear();
-            for (QueryDocumentSnapshot doc : value) {
-                Book book = doc.toObject(Book.class);
-                book.setId(doc.getId());
-                bookList.add(book);
-            }
-            adapter.updateList(bookList);
-        });
+        loadBooks(categoryId);
+    }
+    
+    public void showAllBooks() {
+        loadBooks(null);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (bookListener != null) bookListener.remove();
     }
 }
