@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+<<<<<<< HEAD
     <!-- CẤP QUYỀN TRUY CẬP INTERNET ĐỂ LOAD ẢNH -->
+=======
+>>>>>>> 0d5c59f (22/3)
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,6 +19,7 @@
         android:theme="@style/Theme.Bài1"
         tools:targetApi="31">
 
+<<<<<<< HEAD
         <!-- ĐĂNG KÝ CÁC MÀN HÌNH QUẢN TRỊ -->
         <activity
             android:name=".AdminOrderListActivity"
@@ -50,6 +54,11 @@
 
         <activity
             android:name=".LoginActivity"
+=======
+        <!-- MÀN HÌNH CHÍNH KHI MỞ APP -->
+        <activity
+            android:name=".HomeActivity"
+>>>>>>> 0d5c59f (22/3)
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,5 +66,29 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
+=======
+        <!-- ĐỂ TRÁNH LỖI KHI CHẠY, CHÚNG TA ĐỂ ĐĂNG NHẬP LÀ TRUE LUÔN -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true" />
+
+        <activity android:name=".AdminOrderListActivity" android:exported="false" />
+        <activity android:name=".CategoryListActivity" android:exported="false" />
+        <activity android:name=".OrderHistoryDetailActivity" android:exported="false" />
+        <activity android:name=".CartActivity" android:exported="false" />
+        <activity android:name=".ForgotPasswordActivity" android:exported="false" />
+        <activity android:name=".AddBookActivity" android:exported="false" />
+        <activity android:name=".DetailActivity" android:exported="false" />
+        <activity android:name=".ProfileActivity" android:exported="false" />
+        <activity android:name=".RegisterActivity" android:exported="false" />
+        <activity android:name=".PromotionActivity" android:exported="false" />
+        <activity android:name=".AdminUserListActivity" android:exported="false" />
+
+>>>>>>> 0d5c59f (22/3)
     </application>
 </manifest>

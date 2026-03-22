@@ -15,14 +15,6 @@
             android:orientation="vertical"
             android:padding="20dp">
 
-            <ImageButton
-                android:id="@+id/btnBackProfile"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_media_previous"
-                app:tint="#000000" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,9 +95,6 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
-<<<<<<< HEAD
-=======
-                <!-- NÚT QUẢN LÝ SÁCH MỚI -->
                 <Button
                     android:id="@+id/btnManageBooks"
                     android:layout_width="match_parent"
@@ -116,7 +105,6 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
->>>>>>> 0d5c59f (22/3)
                 <Button
                     android:id="@+id/btnManageOrders"
                     android:layout_width="match_parent"
@@ -126,11 +114,6 @@
                     android:text="QUẢN LÝ ĐƠN HÀNG"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
-<<<<<<< HEAD
-            </LinearLayout>
-
-            <!-- LỊCH SỬ MUA HÀNG (DÀNH CHO USER) -->
-=======
 
                 <Button
                     android:id="@+id/btnManageUsers"
@@ -142,25 +125,6 @@
                     android:textColor="@color/white"
                     android:textStyle="bold" />
             </LinearLayout>
-
-            <!-- LỊCH SỬ MUA HÀNG -->
->>>>>>> 0d5c59f (22/3)
-            <TextView
-                android:id="@+id/txtHistoryTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Lịch sử mua hàng"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvOrderHistory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:nestedScrollingEnabled="false" />
 
             <Button
                 android:id="@+id/btnLogout"

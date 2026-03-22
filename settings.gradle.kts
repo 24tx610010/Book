@@ -16,9 +16,16 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+<<<<<<< HEAD
+=======
+        maven { url = uri("https://jitpack.io") } // THÊM DÒNG NÀY ĐỂ TẢI THƯ VIỆN BIỂU ĐỒ
+>>>>>>> 0d5c59f (22/3)
     }
 }
 
 rootProject.name = "Bài1"
 include(":app")
+<<<<<<< HEAD
  
+=======
+>>>>>>> 0d5c59f (22/3)

@@ -6,7 +6,10 @@
     android:background="#FFFFFF">
 
     <androidx.core.widget.NestedScrollView
+<<<<<<< HEAD
         android:id="@+id/nestedScrollView"
+=======
+>>>>>>> 0d5c59f (22/3)
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="80dp">
@@ -17,13 +20,17 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+<<<<<<< HEAD
             <!-- Nút Quay lại -->
+=======
+>>>>>>> 0d5c59f (22/3)
             <ImageButton
                 android:id="@+id/btnBack"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_media_previous"
+<<<<<<< HEAD
                 app:tint="#000000"
                 android:layout_marginBottom="8dp"/>
 
@@ -33,6 +40,17 @@
                 android:layout_height="300dp"
                 android:scaleType="fitCenter"
                 android:src="@mipmap/ic_launcher"
+=======
+                app:tint="@color/colorPrimary"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- SLIDE ẢNH CHI TIẾT -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvBookImages"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:orientation="horizontal"
+>>>>>>> 0d5c59f (22/3)
                 android:background="#F5F5F5"/>
 
             <TextView
@@ -42,6 +60,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Tên sách"
                 android:textColor="#000000"
+<<<<<<< HEAD
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -192,10 +211,74 @@
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+=======
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <!-- KHU VỰC GIÁ VÀ KHUYẾN MÃI -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+                <TextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giá"
+                    android:textColor="#E53935"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/txtOriginalPriceDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="Giá gốc"
+                    android:textColor="#999999"
+                    android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/txtDiscountLabelDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="#E53935"
+                    android:paddingHorizontal="6dp"
+                    android:text="-20%"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="16dp" android:background="#EEEEEE" />
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="Thông tin chi tiết" android:textStyle="bold" android:textColor="#000000" android:textSize="18sp" />
+            <TextView android:id="@+id/txtBookDetails" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textColor="#555555" android:lineSpacingExtra="4dp" />
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="Mô tả sản phẩm" android:textStyle="bold" android:textColor="#000000" android:textSize="18sp" />
+            <TextView android:id="@+id/txtDesc" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:textColor="#555555" />
+
+            <View android:id="@+id/dividerReview" android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="16dp" android:background="#EEEEEE" />
+
+            <LinearLayout android:id="@+id/layoutReview" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingTop="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Đánh giá sản phẩm" android:textStyle="bold" android:textColor="#000000" android:textSize="18sp" />
+                <RatingBar android:id="@+id/ratingBar" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:numStars="5" android:rating="5" />
+                <EditText android:id="@+id/edtComment" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:hint="Viết đánh giá của bạn..." android:background="@drawable/bg_input" android:padding="12dp" />
+                <Button android:id="@+id/btnSubmitReview" style="@style/Widget.MaterialComponents.Button.TextButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="end" android:text="GỬI ĐÁNH GIÁ" />
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nhận xét từ khách hàng" android:textStyle="bold" android:textColor="#000000" android:textSize="16sp" />
+                <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvReviews" android:layout_width="match_parent" android:layout_height="wrap_content" android:nestedScrollingEnabled="false" />
+            </LinearLayout>
+
+            <View android:layout_width="match_parent" android:layout_height="1dp" android:layout_marginTop="16dp" android:background="#EEEEEE" />
+            <TextView android:id="@+id/txtRelatedTitle" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="16dp" android:text="Sách cùng tác giả" android:textStyle="bold" android:textColor="#000000" android:textSize="18sp" />
+            <androidx.recyclerview.widget.RecyclerView android:id="@+id/rvRelatedBooks" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" />
+>>>>>>> 0d5c59f (22/3)
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+<<<<<<< HEAD
     <!-- THANH BOTTOM BAR: MUA HÀNG VÀ THÊM GIỎ HÀNG -->
     <LinearLayout
         android:id="@+id/layoutUserActions"
@@ -229,6 +312,11 @@
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
 
+=======
+    <LinearLayout android:id="@+id/layoutUserActions" android:layout_width="match_parent" android:layout_height="70dp" android:layout_gravity="bottom" android:background="#FFFFFF" android:elevation="12dp" android:padding="8dp">
+        <Button android:id="@+id/btnAddToCart" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#FF9800" android:text="THÊM GIỎ HÀNG" android:textStyle="bold" />
+        <Button android:id="@+id/btnBuyNow" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:backgroundTint="#E53935" android:text="MUA NGAY" android:textStyle="bold" android:layout_marginStart="8dp" />
+>>>>>>> 0d5c59f (22/3)
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

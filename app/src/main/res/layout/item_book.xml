@@ -3,13 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+<<<<<<< HEAD
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp"
+=======
+    app:cardCornerRadius="8dp"
+    app:cardElevation="2dp"
+>>>>>>> 0d5c59f (22/3)
     app:cardUseCompatPadding="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:padding="12dp">
 
         <ImageView
@@ -21,6 +27,35 @@
             android:src="@mipmap/ic_launcher"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+=======
+        android:padding="8dp">
+
+        <ImageView
+            android:id="@+id/imgBookThumb"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="#F0F0F0"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- NHÃN GIẢM GIÁ % -->
+        <TextView
+            android:id="@+id/txtDiscountLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#E53935"
+            android:paddingHorizontal="6dp"
+            android:paddingVertical="2dp"
+            android:text="-30%"
+            android:textColor="#FFFFFF"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@id/imgBookThumb"
+            app:layout_constraintTop_toTopOf="@id/imgBookThumb" />
+>>>>>>> 0d5c59f (22/3)
 
         <!-- DẤU GẠCH ĐỎ KHI HẾT HÀNG -->
         <View
@@ -34,7 +69,11 @@
             app:layout_constraintStart_toStartOf="@id/imgBookThumb"
             app:layout_constraintTop_toTopOf="@id/imgBookThumb" />
 
+<<<<<<< HEAD
         <!-- CHỮ HẾT HÀNG (TUỲ CHỌN THÊM) -->
+=======
+        <!-- CHỮ HẾT HÀNG -->
+>>>>>>> 0d5c59f (22/3)
         <TextView
             android:id="@+id/txtSoldOut"
             android:layout_width="wrap_content"
@@ -53,13 +92,19 @@
 
         <ImageButton
             android:id="@+id/btnFavorite"
+<<<<<<< HEAD
             android:layout_width="32dp"
             android:layout_height="32dp"
+=======
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+>>>>>>> 0d5c59f (22/3)
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_heart_outline"
             app:layout_constraintEnd_toEndOf="@id/imgBookThumb"
             app:layout_constraintTop_toTopOf="@id/imgBookThumb" />
 
+<<<<<<< HEAD
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -90,10 +135,56 @@
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
+=======
+        <TextView
+            android:id="@+id/txtBookName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="Tên sách"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/imgBookThumb" />
+
+        <TextView
+            android:id="@+id/txtPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="100,000 đ"
+            android:textColor="#E53935"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/txtBookName"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/txtOriginalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="150,000 đ"
+            android:textColor="#999999"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@id/txtPrice"
+            app:layout_constraintStart_toEndOf="@id/txtPrice" />
+
+        <LinearLayout
+            android:id="@+id/layoutStockInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="4dp"
+            app:layout_constraintTop_toBottomOf="@id/txtPrice">
+>>>>>>> 0d5c59f (22/3)
             <TextView
                 android:id="@+id/txtStock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:layout_marginTop="2dp"
                 android:text="Còn lại: 0"
                 android:textColor="#666666"
@@ -174,6 +265,109 @@
                     android:paddingHorizontal="12dp"
                     android:text="CHI TIẾT" />
             </LinearLayout>
+=======
+                android:text="Tồn: 0"
+                android:textColor="#666666"
+                android:textSize="11sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" | "
+                android:textColor="#CCCCCC"
+                android:textSize="11sp" />
+            <TextView
+                android:id="@+id/txtSoldQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bán: 0"
+                android:textColor="#666666"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <RatingBar
+            android:id="@+id/itemRatingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:numStars="5"
+            android:progressTint="#FFC107"
+            android:stepSize="0.1"
+            android:isIndicator="true"
+            app:layout_constraintTop_toBottomOf="@id/layoutStockInfo"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <!-- CÁC NÚT CHO USER -->
+        <LinearLayout
+            android:id="@+id/layoutUserQuickActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/itemRatingBar">
+
+            <ImageButton
+                android:id="@+id/btnQuickAddToCart"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="#F0F0F0"
+                android:src="@drawable/ic_shopping_cart"
+                app:tint="#FF9800" />
+
+            <Button
+                android:id="@+id/btnQuickBuy"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:backgroundTint="#E53935"
+                android:padding="0dp"
+                android:text="MUA"
+                android:textColor="#FFFFFF"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- NÚT CHI TIẾT (LUÔN HIỆN) -->
+        <Button
+            android:id="@+id/btnDetail"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="32dp"
+            android:layout_marginTop="4dp"
+            android:padding="0dp"
+            android:text="CHI TIẾT"
+            android:textSize="10sp"
+            app:layout_constraintTop_toBottomOf="@id/layoutUserQuickActions" />
+
+        <!-- NÚT ADMIN (SỬA / XÓA) -->
+        <LinearLayout
+            android:id="@+id/layoutAdminActions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/btnDetail">
+            <Button
+                android:id="@+id/btnEdit"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:padding="0dp"
+                android:text="SỬA"
+                android:textSize="10sp" />
+            <Button
+                android:id="@+id/btnDelete"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_weight="1"
+                android:padding="0dp"
+                android:text="XÓA"
+                android:textColor="#F44336"
+                android:textSize="10sp" />
+>>>>>>> 0d5c59f (22/3)
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

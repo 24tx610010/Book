@@ -21,13 +21,22 @@ public class CartManager {
                 book.getId(),
                 book.getTenSach(),
                 book.getGiaBan(),
+<<<<<<< HEAD
+=======
+                book.getGiaGoc(),
+>>>>>>> 0d5c59f (22/3)
                 qty,
                 book.getHinhAnh(),
                 book.getMoTa(),
                 book.getTacGia(),
                 book.getNhaXuatBan(),
                 book.getNamXuatBan(),
+<<<<<<< HEAD
                 book.getNgonNgu()
+=======
+                book.getNgonNgu(),
+                book.getMaLoaiSach()
+>>>>>>> 0d5c59f (22/3)
         ));
     }
 
@@ -49,15 +58,70 @@ public class CartManager {
         }
     }
 
+<<<<<<< HEAD
     public static double getTotalPrice() {
         double total = 0;
         for (CartItem item : cartList) {
             total += item.getTotalPrice();
+=======
+    // TỔNG TIỀN HÀNG (Dựa trên GIÁ GỐC để hiển thị chưa giảm)
+    public static double getSubtotal() {
+        double total = 0;
+        for (CartItem item : cartList) {
+            if (item.isSelected()) {
+                total += item.getOriginalPrice() * item.getQuantity();
+            }
+>>>>>>> 0d5c59f (22/3)
         }
         return total;
+    }
+
+<<<<<<< HEAD
+    public static void clearCart() {
+        cartList.clear();
+    }
+=======
+    // TỔNG SỐ TIỀN ĐƯỢC GIẢM (Giảm giá trực tiếp + Giảm giá số lượng)
+    public static double getDiscountAmount() {
+        double itemDiscount = 0;
+        int totalQty = 0;
+        double subtotalAfterItemDiscount = 0;
+
+        for (CartItem item : cartList) {
+            if (item.isSelected()) {
+                // Giảm giá trực tiếp của từng cuốn sách
+                itemDiscount += (item.getOriginalPrice() - item.getUnitPrice()) * item.getQuantity();
+                
+                totalQty += item.getQuantity();
+                subtotalAfterItemDiscount += item.getUnitPrice() * item.getQuantity();
+            }
+        }
+
+        // Giảm giá tự động theo số lượng (5% cho 2 món, 6% cho >=3 món)
+        double qtyDiscount = 0;
+        if (totalQty == 2) {
+            qtyDiscount = subtotalAfterItemDiscount * 0.05;
+        } else if (totalQty >= 3) {
+            qtyDiscount = subtotalAfterItemDiscount * 0.06;
+        }
+
+        return itemDiscount + qtyDiscount;
+    }
+
+    // TỔNG TIỀN CUỐI CÙNG SAU KHI TRỪ TẤT CẢ GIẢM GIÁ
+    public static double getTotalPrice() {
+        double finalTotal = getSubtotal() - getDiscountAmount();
+        return Math.max(0, finalTotal);
     }
 
     public static void clearCart() {
         cartList.clear();
     }
+    
+    public static void toggleAll(boolean selected) {
+        for (CartItem item : cartList) {
+            item.setSelected(selected);
+        }
+    }
+>>>>>>> 0d5c59f (22/3)
 }
