@@ -7,27 +7,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.UUID;
 
 public class PromotionActivity extends AppCompatActivity {
 
     private EditText edtPromoCode, edtPromoValue;
-    private RadioGroup rgPromoType;
+    private RadioGroup rgPromoType, rgApplyMethod;
     private Spinner spnPromoTarget;
     private Button btnStartDate, btnEndDate, btnAddPromo;
     private FirebaseFirestore db;
@@ -52,6 +53,7 @@ public class PromotionActivity extends AppCompatActivity {
         edtPromoCode = findViewById(R.id.edtPromoCode);
         edtPromoValue = findViewById(R.id.edtPromoValue);
         rgPromoType = findViewById(R.id.rgPromoType);
+        rgApplyMethod = findViewById(R.id.rgApplyMethod);
         spnPromoTarget = findViewById(R.id.spnPromoTarget);
         btnStartDate = findViewById(R.id.btnStartDate);
         btnEndDate = findViewById(R.id.btnEndDate);
@@ -59,12 +61,22 @@ public class PromotionActivity extends AppCompatActivity {
 
         btnBack.setOnClickListener(v -> finish());
 
-        // Mặc định ngày bắt đầu là hôm nay, kết thúc là 7 ngày sau
+        // Xử lý ẩn/hiện ô nhập mã
+        rgApplyMethod.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rbVoucherCode) {
+                edtPromoCode.setVisibility(View.VISIBLE);
+                btnAddPromo.setText("LƯU MÃ VOUCHER");
+            } else {
+                edtPromoCode.setVisibility(View.GONE);
+                btnAddPromo.setText("ÁP DỤNG GIẢM GIÁ TRỰC TIẾP");
+            }
+        });
+
+        // Mặc định ngày
         btnStartDate.setText(sdf.format(startCalendar.getTime()));
         endCalendar.add(Calendar.DAY_OF_YEAR, 7);
         btnEndDate.setText(sdf.format(endCalendar.getTime()));
 
-        // Setup Spinner
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, targetNames);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spnPromoTarget.setAdapter(spinnerAdapter);
@@ -92,17 +104,14 @@ public class PromotionActivity extends AppCompatActivity {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            
             if (isStart) btnStartDate.setText(sdf.format(calendar.getTime()));
             else btnEndDate.setText(sdf.format(calendar.getTime()));
-            
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void loadCategories() {
         db.collection("categories").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            targetIds.clear();
-            targetNames.clear();
+            targetIds.clear(); targetNames.clear();
             for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                 targetIds.add(doc.getId());
                 targetNames.add(doc.getString("tenLoai"));
@@ -113,8 +122,7 @@ public class PromotionActivity extends AppCompatActivity {
 
     private void loadBooks() {
         db.collection("books").get().addOnSuccessListener(queryDocumentSnapshots -> {
-            targetIds.clear();
-            targetNames.clear();
+            targetIds.clear(); targetNames.clear();
             for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                 targetIds.add(doc.getId());
                 targetNames.add(doc.getString("tenSach"));
@@ -124,52 +132,79 @@ public class PromotionActivity extends AppCompatActivity {
     }
 
     private void savePromotion() {
-        String code = edtPromoCode.getText().toString().trim().toUpperCase();
         String valStr = edtPromoValue.getText().toString().trim();
+        if (valStr.isEmpty()) {
+            Toast.makeText(this, "Vui lòng nhập giá trị giảm", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int percent = Integer.parseInt(valStr);
+        int applyMethodId = rgApplyMethod.getCheckedRadioButtonId();
+        int promoTypeId = rgPromoType.getCheckedRadioButtonId();
         
-        if (code.isEmpty() || valStr.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        // CHỈNH GIỜ: Bắt đầu lúc 00:00:00
-        startCalendar.set(Calendar.HOUR_OF_DAY, 0);
-        startCalendar.set(Calendar.MINUTE, 0);
-        startCalendar.set(Calendar.SECOND, 0);
-
-        // CHỈNH GIỜ: Kết thúc lúc 23:59:59
-        endCalendar.set(Calendar.HOUR_OF_DAY, 23);
-        endCalendar.set(Calendar.MINUTE, 59);
-        endCalendar.set(Calendar.SECOND, 59);
-
-        if (endCalendar.before(startCalendar)) {
-            Toast.makeText(this, "Ngày kết thúc phải sau ngày bắt đầu", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        double value = Double.parseDouble(valStr);
         String type = "all";
         String targetId = "";
-
-        int checkedId = rgPromoType.getCheckedRadioButtonId();
-        if (checkedId == R.id.rbByCategory) {
-            type = "category";
+        if (promoTypeId == R.id.rbByCategory) { 
             if (targetIds.isEmpty()) return;
-            targetId = targetIds.get(spnPromoTarget.getSelectedItemPosition());
-        } else if (checkedId == R.id.rbByBook) {
-            type = "book";
+            type = "category"; 
+            targetId = targetIds.get(spnPromoTarget.getSelectedItemPosition()); 
+        }
+        else if (promoTypeId == R.id.rbByBook) { 
             if (targetIds.isEmpty()) return;
-            targetId = targetIds.get(spnPromoTarget.getSelectedItemPosition());
+            type = "book"; 
+            targetId = targetIds.get(spnPromoTarget.getSelectedItemPosition()); 
         }
 
-        String id = UUID.randomUUID().toString();
-        Promotion promo = new Promotion(id, code, value, type, targetId, startCalendar.getTime(), endCalendar.getTime());
+        if (applyMethodId == R.id.rbVoucherCode) {
+            // LƯU DƯỚI DẠNG VOUCHER (NHẬP MÃ)
+            String code = edtPromoCode.getText().toString().trim().toUpperCase();
+            if (code.isEmpty()) { Toast.makeText(this, "Vui lòng nhập mã voucher", Toast.LENGTH_SHORT).show(); return; }
+            
+            String id = UUID.randomUUID().toString();
+            Promotion promo = new Promotion(id, code, percent, type, targetId, startCalendar.getTime(), endCalendar.getTime());
+            db.collection("promotions").document(id).set(promo)
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(this, "Đã lưu mã Voucher thành công!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
+        } else {
+            // GIẢM GIÁ TRỰC TIẾP (HIỆN GIÁ GỐC/GIÁ MỚI)
+            updateBooksDirectly(type, targetId, percent);
+        }
+    }
 
-        db.collection("promotions").document(id).set(promo)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "Đã lưu khuyến mãi!", Toast.LENGTH_SHORT).show();
-                    finish();
-                })
-                .addOnFailureListener(e -> Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+    private void updateBooksDirectly(String type, String targetId, int percent) {
+        Query query;
+        if (type.equals("book")) {
+            query = db.collection("books").whereEqualTo("Id", targetId);
+        } else if (type.equals("category")) {
+            query = db.collection("books").whereEqualTo("MaLoaiSach", targetId);
+        } else {
+            query = db.collection("books");
+        }
+
+        query.get().addOnSuccessListener(queryDocumentSnapshots -> {
+            if (queryDocumentSnapshots.isEmpty()) {
+                Toast.makeText(this, "Không tìm thấy sách phù hợp để giảm giá", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            WriteBatch batch = db.batch();
+            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                Double giaGoc = doc.getDouble("GiaGoc");
+                if (giaGoc == null) giaGoc = doc.getDouble("GiaBan"); // Fallback
+                
+                if (giaGoc != null) {
+                    double giaMoi = giaGoc * (1 - (percent / 100.0));
+                    DocumentReference ref = doc.getReference();
+                    batch.update(ref, "GiaBan", giaMoi);
+                    batch.update(ref, "khuyenMai", percent);
+                    batch.update(ref, "GiaGoc", giaGoc); // Đảm bảo GiaGoc luôn có giá trị để hiển thị gạch ngang
+                }
+            }
+            batch.commit().addOnSuccessListener(aVoid -> {
+                Toast.makeText(this, "Đã áp dụng giảm giá trực tiếp thành công!", Toast.LENGTH_SHORT).show();
+                finish();
+            });
+        }).addOnFailureListener(e -> Toast.makeText(this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show());
     }
 }

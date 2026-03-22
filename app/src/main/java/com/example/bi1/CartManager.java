@@ -21,22 +21,15 @@ public class CartManager {
                 book.getId(),
                 book.getTenSach(),
                 book.getGiaBan(),
-<<<<<<< HEAD
-=======
                 book.getGiaGoc(),
->>>>>>> 0d5c59f (22/3)
                 qty,
                 book.getHinhAnh(),
                 book.getMoTa(),
                 book.getTacGia(),
                 book.getNhaXuatBan(),
                 book.getNamXuatBan(),
-<<<<<<< HEAD
-                book.getNgonNgu()
-=======
                 book.getNgonNgu(),
                 book.getMaLoaiSach()
->>>>>>> 0d5c59f (22/3)
         ));
     }
 
@@ -58,12 +51,6 @@ public class CartManager {
         }
     }
 
-<<<<<<< HEAD
-    public static double getTotalPrice() {
-        double total = 0;
-        for (CartItem item : cartList) {
-            total += item.getTotalPrice();
-=======
     // TỔNG TIỀN HÀNG (Dựa trên GIÁ GỐC để hiển thị chưa giảm)
     public static double getSubtotal() {
         double total = 0;
@@ -71,16 +58,10 @@ public class CartManager {
             if (item.isSelected()) {
                 total += item.getOriginalPrice() * item.getQuantity();
             }
->>>>>>> 0d5c59f (22/3)
         }
         return total;
     }
 
-<<<<<<< HEAD
-    public static void clearCart() {
-        cartList.clear();
-    }
-=======
     // TỔNG SỐ TIỀN ĐƯỢC GIẢM (Giảm giá trực tiếp + Giảm giá số lượng)
     public static double getDiscountAmount() {
         double itemDiscount = 0;
@@ -123,5 +104,4 @@ public class CartManager {
             item.setSelected(selected);
         }
     }
->>>>>>> 0d5c59f (22/3)
 }
