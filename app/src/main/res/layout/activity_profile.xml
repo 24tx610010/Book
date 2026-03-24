@@ -33,11 +33,57 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
+            <!-- THẺ ĐIỂM TÍCH LŨY -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardLoyalty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_gradient_purple"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Điểm tích lũy khách hàng"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtProfileLoyalty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="0 điểm"
+                        android:textColor="#FFFFFF"
+                        android:textSize="32sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtLoyaltyNote"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Bạn chưa đủ điểm, vui lòng mua sách để tích lũy"
+                        android:textColor="#E0E0E0"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <!-- THÔNG TIN CÁ NHÂN -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="20dp"
                 app:cardCornerRadius="15dp"
                 app:cardElevation="2dp">
 
@@ -70,7 +116,7 @@
                         android:layout_marginTop="10dp"
                         android:orientation="horizontal">
                         <TextView android:layout_width="100dp" android:layout_height="wrap_content" android:text="Số điện thoại: " android:textColor="#666666"/>
-                        <TextView android:id="@+id/txtProfilePhone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0987654321" android:textColor="#000000"/>
+                        <TextView android:id="@+id/txtProfilePhone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0325047969" android:textColor="#000000"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -158,7 +204,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="#666666"
-                android:text="ĐẶT XUẤT"
+                android:text="ĐĂNG XUẤT"
                 android:textStyle="bold" />
 
         </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,7 +36,8 @@ public class HomeFragment extends Fragment {
     private FirebaseFirestore db;
     private EditText edtSearch;
     private int roleId;
-    private ListenerRegistration bookListener;
+    private ListenerRegistration bookListener, bestSellerListener;
+    private boolean isErrorShown = false;
 
     // UI cho Sách bán chạy
     private View layoutBestSeller;
@@ -87,46 +90,66 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    public void filterByCategory(String categoryId) {
+        if (edtSearch != null) edtSearch.setText("");
+        loadBooks(categoryId);
+    }
+
     private void loadBestSellerBook() {
-        db.collection("books")
+        if (bestSellerListener != null) bestSellerListener.remove();
+        bestSellerListener = db.collection("books")
                 .orderBy("luotBan", Query.Direction.DESCENDING)
                 .limit(1)
                 .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Log.e("HomeFragment", "Lỗi Sách bán chạy: " + error.getMessage());
+                        // Nếu lỗi do thiếu Index (thường gặp khi orderBy), link tạo index sẽ hiện ở Logcat
+                        return;
+                    }
                     if (value != null && !value.isEmpty()) {
                         layoutBestSeller.setVisibility(View.VISIBLE);
                         Book book = value.getDocuments().get(0).toObject(Book.class);
-                        book.setId(value.getDocuments().get(0).getId());
+                        if (book != null) {
+                            book.setId(value.getDocuments().get(0).getId());
+                            txtBestSellerName.setText(book.getTenSach());
+                            txtBestSellerSold.setText("Đã bán: " + book.getLuotBan());
+                            txtBestSellerPrice.setText(String.format("%,.0f đ", book.getGiaBan()));
 
-                        txtBestSellerName.setText(book.getTenSach());
-                        txtBestSellerSold.setText("Đã bán: " + book.getLuotBan());
-                        txtBestSellerPrice.setText(String.format("%,.0f đ", book.getGiaBan()));
+                            if (book.getHinhAnh() != null && !book.getHinhAnh().isEmpty()) {
+                                Glide.with(this).load(book.getHinhAnh()).placeholder(R.mipmap.ic_launcher).into(imgBestSeller);
+                            }
 
-                        if (book.getHinhAnh() != null && !book.getHinhAnh().isEmpty()) {
-                            Glide.with(this).load(book.getHinhAnh()).into(imgBestSeller);
+                            btnViewBestSeller.setOnClickListener(v -> {
+                                Intent intent = new Intent(getContext(), DetailActivity.class);
+                                intent.putExtra("book", book);
+                                startActivity(intent);
+                            });
                         }
-
-                        btnViewBestSeller.setOnClickListener(v -> {
-                            Intent intent = new Intent(getContext(), DetailActivity.class);
-                            intent.putExtra("book", book);
-                            startActivity(intent);
-                        });
                     } else {
                         layoutBestSeller.setVisibility(View.GONE);
                     }
                 });
     }
 
-    private void loadBooks(String categoryId) {
+    private void loadBooks(@Nullable String categoryId) {
         if (bookListener != null) bookListener.remove();
 
         Query query = db.collection("books");
-        
         if (categoryId != null && !categoryId.isEmpty()) {
             query = query.whereEqualTo("MaLoaiSach", categoryId);
         }
 
         bookListener = query.addSnapshotListener((value, error) -> {
+            if (error != null) {
+                Log.e("HomeFragment", "Lỗi Danh sách sách: " + error.getMessage());
+                if (!isErrorShown) {
+                    Toast.makeText(getContext(), "[Trang chủ] Lỗi tải sách. Kiểm tra Rules bảng 'books'!", Toast.LENGTH_LONG).show();
+                    isErrorShown = true;
+                }
+                return;
+            }
             if (value != null) {
+                isErrorShown = false;
                 bookList.clear();
                 for (QueryDocumentSnapshot doc : value) {
                     Book book = doc.toObject(Book.class);
@@ -137,18 +160,11 @@ public class HomeFragment extends Fragment {
             }
         });
     }
-    
-    public void filterByCategory(String categoryId) {
-        loadBooks(categoryId);
-    }
-    
-    public void showAllBooks() {
-        loadBooks(null);
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         if (bookListener != null) bookListener.remove();
+        if (bestSellerListener != null) bestSellerListener.remove();
     }
 }

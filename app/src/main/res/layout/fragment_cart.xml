@@ -167,6 +167,54 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- KHÁCH HÀNG THÂN THIẾT -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardLoyalty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:visibility="gone"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:background="#FFF3E0">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🌟 KHÁCH HÀNG THÂN THIẾT"
+                        android:textColor="#E65100"
+                        android:textStyle="bold" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp">
+                        <TextView
+                            android:id="@+id/txtLoyaltyInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Điểm hiện tại: 0 (Đạt 10 điểm để được FREE 1 sách)"
+                            android:textColor="#5D4037"
+                            android:textSize="13sp" />
+
+                        <CheckBox
+                            android:id="@+id/cbUseLoyalty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:text="Dùng 10đ để FREE 1 sách"
+                            android:textColor="#E65100"
+                            android:textSize="12sp"
+                            android:buttonTint="#E65100"
+                            android:visibility="gone"/>
+                    </RelativeLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <!-- CHỌN TẤT CẢ -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

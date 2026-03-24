@@ -230,6 +230,14 @@
                         android:gravity="center_vertical"
                         android:text="👥 Quản lý Người dùng"
                         android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/menuAdminLoyalCustomers"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:gravity="center_vertical"
+                        android:text="⭐ Khách hàng thân thiết"
+                        android:textSize="15sp" />
                 </LinearLayout>
 
                 <View

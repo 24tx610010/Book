@@ -9,6 +9,7 @@ public class User implements Serializable {
     private String hoTen;
     private String password;
     private int roleid; // 1: Admin, 2: User
+    private int loyaltyPoints; // Điểm tích lũy
 
     public User() {}
 
@@ -18,6 +19,7 @@ public class User implements Serializable {
         this.hoTen = hoTen;
         this.password = password;
         this.roleid = roleid;
+        this.loyaltyPoints = 0;
     }
 
     @PropertyName("Id")
@@ -44,4 +46,9 @@ public class User implements Serializable {
     public int getRoleid() { return roleid; }
     @PropertyName("RoleID")
     public void setRoleid(int roleid) { this.roleid = roleid; }
+
+    @PropertyName("LoyaltyPoints")
+    public int getLoyaltyPoints() { return loyaltyPoints; }
+    @PropertyName("LoyaltyPoints")
+    public void setLoyaltyPoints(int loyaltyPoints) { this.loyaltyPoints = loyaltyPoints; }
 }

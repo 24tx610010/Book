@@ -3,6 +3,7 @@ package com.example.bi1;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -65,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
 
         // 1. Phân quyền khởi tạo
         if (isLoggedIn && roleId == 1) {
-            btnAddBook.setVisibility(View.VISIBLE);
+            if (btnAddBook != null) btnAddBook.setVisibility(View.VISIBLE);
             if (layoutCart != null) layoutCart.setVisibility(View.GONE);
             if (layoutAdminDrawer != null) layoutAdminDrawer.setVisibility(View.VISIBLE);
             if (layoutCategoryDrawer != null) layoutCategoryDrawer.setVisibility(View.GONE);
@@ -74,10 +75,10 @@ public class HomeActivity extends AppCompatActivity {
             txtToolbarTitle.setText("THỐNG KÊ DOANH THU");
             loadFragment(new StatisticFragment());
         } else {
-            btnAddBook.setVisibility(View.GONE);
+            if (btnAddBook != null) btnAddBook.setVisibility(View.GONE);
             if (layoutCart != null) {
                 layoutCart.setVisibility(View.VISIBLE);
-                updateCartBadge();
+                refreshCartBadge();
             }
             if (layoutAdminDrawer != null) layoutAdminDrawer.setVisibility(View.GONE);
             if (layoutCategoryDrawer != null) layoutCategoryDrawer.setVisibility(View.VISIBLE);
@@ -88,11 +89,10 @@ public class HomeActivity extends AppCompatActivity {
             loadFragment(homeFragment);
         }
 
-        // 2. Bottom Navigation với check đăng nhập
+        // 2. Bottom Navigation
         if (bottomNavigationView != null) {
             bottomNavigationView.setOnItemSelectedListener(item -> {
                 int itemId = item.getItemId();
-                
                 if (itemId == R.id.nav_home) {
                     txtToolbarTitle.setText("BOOK STORE");
                     if (homeFragment == null) homeFragment = new HomeFragment();
@@ -100,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
 
                 if (!isLoggedIn) {
-                    Toast.makeText(this, "Vui lòng đăng nhập để sử dụng!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Vui lòng đăng nhập!", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(this, LoginActivity.class));
                     return false;
                 }
@@ -110,7 +110,7 @@ public class HomeActivity extends AppCompatActivity {
                     txtToolbarTitle.setText("YÊU THÍCH");
                     fragment = new FavoriteFragment();
                 } else if (itemId == R.id.nav_orders) {
-                    txtToolbarTitle.setText("ĐƠN HÀNG CỦA BẠN");
+                    txtToolbarTitle.setText("ĐƠN HÀNG");
                     fragment = new OrderHistoryFragment();
                 } else if (itemId == R.id.nav_cart) {
                     txtToolbarTitle.setText("GIỎ HÀNG");
@@ -124,8 +124,8 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         setupSideMenu();
-
-        btnAddBook.setOnClickListener(v -> startActivity(new Intent(this, AddBookActivity.class)));
+        if (btnAddBook != null) btnAddBook.setOnClickListener(v -> startActivity(new Intent(this, AddBookActivity.class)));
+        
         if (layoutCart != null) {
             layoutCart.setOnClickListener(v -> {
                 if (!isLoggedIn) {
@@ -137,101 +137,134 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    // THÊM HÀM NÀY ĐỂ TRẢ VỀ ROLEID CHO FRAGMENT
     public int getRoleId() {
         return roleId;
     }
 
-    private void setupSideMenu() {
-        btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
-        
-        rvMenuCategories.setLayoutManager(new LinearLayoutManager(this));
-        categoryList = new ArrayList<>();
-        categoryMenuAdapter = new CategoryMenuAdapter(this, categoryList, category -> {
-            txtToolbarTitle.setText(category.getTenLoai().toUpperCase());
-            if (!isLoggedIn || roleId != 1) {
-                if (bottomNavigationView != null) bottomNavigationView.setSelectedItemId(R.id.nav_home);
-                if (homeFragment != null) homeFragment.filterByCategory(category.getId());
-            }
-            drawerLayout.closeDrawer(GravityCompat.START);
-        });
-        rvMenuCategories.setAdapter(categoryMenuAdapter);
-
-        db.collection("categories").get().addOnSuccessListener(snapshots -> {
-            categoryList.clear();
-            for (QueryDocumentSnapshot doc : snapshots) {
-                categoryList.add(doc.toObject(Category.class));
-            }
-            categoryMenuAdapter.notifyDataSetChanged();
-        });
-
-        findViewById(R.id.menuHome).setOnClickListener(v -> {
-            if (isLoggedIn && roleId == 1) {
-                txtToolbarTitle.setText("THỐNG KÊ DOANH THU");
-                loadFragment(new StatisticFragment());
-            } else {
+    public void refreshToHome() {
+        if (roleId == 1) {
+            txtToolbarTitle.setText("BOOK STORE");
+            if (homeFragment == null) homeFragment = new HomeFragment();
+            loadFragment(homeFragment);
+        } else {
+            if (bottomNavigationView != null) {
                 bottomNavigationView.setSelectedItemId(R.id.nav_home);
             }
-            drawerLayout.closeDrawer(GravityCompat.START);
-        });
+        }
+    }
 
-        // Nút Admin Drawer
-        if (isLoggedIn && roleId == 1) {
-            findViewById(R.id.menuAdminStatistic).setOnClickListener(v -> {
-                txtToolbarTitle.setText("THỐNG KÊ DOANH THU");
-                loadFragment(new StatisticFragment());
+    private void setupSideMenu() {
+        if (btnMenu != null) btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+        
+        if (rvMenuCategories != null) {
+            rvMenuCategories.setLayoutManager(new LinearLayoutManager(this));
+            categoryList = new ArrayList<>();
+            categoryMenuAdapter = new CategoryMenuAdapter(this, categoryList, category -> {
+                txtToolbarTitle.setText(category.getTenLoai().toUpperCase());
+                if (!isLoggedIn || roleId != 1) {
+                    if (bottomNavigationView != null) bottomNavigationView.setSelectedItemId(R.id.nav_home);
+                    if (homeFragment != null) homeFragment.filterByCategory(category.getId());
+                }
                 drawerLayout.closeDrawer(GravityCompat.START);
             });
-            findViewById(R.id.menuAdminPromotion).setOnClickListener(v -> {
-                startActivity(new Intent(this, PromotionActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-            });
-            findViewById(R.id.menuAdminBooks).setOnClickListener(v -> {
-                txtToolbarTitle.setText("QUẢN LÝ SÁCH");
-                if (homeFragment == null) homeFragment = new HomeFragment();
-                loadFragment(homeFragment);
-                drawerLayout.closeDrawer(GravityCompat.START);
-            });
-            findViewById(R.id.menuAdminCategories).setOnClickListener(v -> {
-                startActivity(new Intent(this, CategoryListActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-            });
-            findViewById(R.id.menuAdminOrders).setOnClickListener(v -> {
-                startActivity(new Intent(this, AdminOrderListActivity.class));
-                drawerLayout.closeDrawer(GravityCompat.START);
-            });
-            findViewById(R.id.menuAdminUsers).setOnClickListener(v -> {
-                startActivity(new Intent(this, AdminUserListActivity.class));
+            rvMenuCategories.setAdapter(categoryMenuAdapter);
+
+            db.collection("categories").get().addOnSuccessListener(snapshots -> {
+                categoryList.clear();
+                for (QueryDocumentSnapshot doc : snapshots) {
+                    categoryList.add(doc.toObject(Category.class));
+                }
+                categoryMenuAdapter.notifyDataSetChanged();
+            }).addOnFailureListener(e -> Log.e("Home", "Error load cat: " + e.getMessage()));
+        }
+
+        View menuHome = findViewById(R.id.menuHome);
+        if (menuHome != null) {
+            menuHome.setOnClickListener(v -> {
+                if (isLoggedIn && roleId == 1) {
+                    txtToolbarTitle.setText("THỐNG KÊ DOANH THU");
+                    loadFragment(new StatisticFragment());
+                } else {
+                    bottomNavigationView.setSelectedItemId(R.id.nav_home);
+                }
                 drawerLayout.closeDrawer(GravityCompat.START);
             });
         }
-        findViewById(R.id.menuLogout).setOnClickListener(v -> logout());
+
+        // Admin Menu Click
+        if (isLoggedIn && roleId == 1) {
+            setupAdminMenuClick();
+        }
+        
+        View menuLogout = findViewById(R.id.menuLogout);
+        if (menuLogout != null) menuLogout.setOnClickListener(v -> logout());
+    }
+
+    private void setupAdminMenuClick() {
+        View v1 = findViewById(R.id.menuAdminStatistic);
+        if (v1 != null) v1.setOnClickListener(v -> { 
+            txtToolbarTitle.setText("THỐNG KÊ DOANH THU");
+            loadFragment(new StatisticFragment()); 
+            drawerLayout.closeDrawer(GravityCompat.START); 
+        });
+        
+        View v2 = findViewById(R.id.menuAdminBooks);
+        if (v2 != null) v2.setOnClickListener(v -> { 
+            txtToolbarTitle.setText("QUẢN LÝ SÁCH");
+            if (homeFragment == null) homeFragment = new HomeFragment(); 
+            loadFragment(homeFragment); 
+            drawerLayout.closeDrawer(GravityCompat.START); 
+        });
+        
+        View v3 = findViewById(R.id.menuAdminOrders);
+        if (v3 != null) v3.setOnClickListener(v -> { 
+            startActivity(new Intent(this, AdminOrderListActivity.class)); 
+            drawerLayout.closeDrawer(GravityCompat.START); 
+        });
+
+        View v4 = findViewById(R.id.menuAdminUsers);
+        if (v4 != null) v4.setOnClickListener(v -> { 
+            startActivity(new Intent(this, AdminUserListActivity.class)); 
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
+
+        View vLoyal = findViewById(R.id.menuAdminLoyalCustomers);
+        if (vLoyal != null) vLoyal.setOnClickListener(v -> {
+            startActivity(new Intent(this, AdminLoyalCustomersActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
+
+        // Bổ sung các chức năng còn thiếu
+        View vPromo = findViewById(R.id.menuAdminPromotion);
+        if (vPromo != null) vPromo.setOnClickListener(v -> {
+            startActivity(new Intent(this, PromotionActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
+
+        View vCat = findViewById(R.id.menuAdminCategories);
+        if (vCat != null) vCat.setOnClickListener(v -> {
+            startActivity(new Intent(this, CategoryListActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
     }
 
     private void logout() {
         SharedPreferences sp = getSharedPreferences("auth", MODE_PRIVATE);
-        sp.edit().putBoolean("logged_in", false).apply();
+        sp.edit().clear().apply();
         isLoggedIn = false;
-        Toast.makeText(this, "Đã đăng xuất!", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 
     private boolean loadFragment(Fragment fragment) {
-        if (fragment != null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+        if (fragment != null && !isFinishing()) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commitAllowingStateLoss();
             return true;
         }
         return false;
     }
 
-    public void refreshToHome() {
-        if (bottomNavigationView != null) bottomNavigationView.setSelectedItemId(R.id.nav_home);
-    }
-
-    public void refreshCartBadge() { updateCartBadge(); }
-
-    private void updateCartBadge() {
+    public void refreshCartBadge() {
         if (txtCartBadge == null) return;
         int count = CartManager.getCartList().size();
         txtCartBadge.setText(String.valueOf(count));
@@ -241,6 +274,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (isLoggedIn && roleId != 1) updateCartBadge();
+        if (isLoggedIn && roleId != 1) refreshCartBadge();
     }
 }

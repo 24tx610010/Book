@@ -60,6 +60,8 @@
         <activity android:name=".RegisterActivity" android:exported="false" />
         <activity android:name=".PromotionActivity" android:exported="false" />
         <activity android:name=".AdminUserListActivity" android:exported="false" />
+        <activity android:name=".AdminLoyalCustomersActivity" android:exported="false" />
+        <activity android:name=".AddressListActivity" android:exported="false" />
 
     </application>
 </manifest>

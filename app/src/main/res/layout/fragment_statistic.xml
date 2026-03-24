@@ -14,12 +14,33 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="THỐNG KÊ DOANH THU"
+            android:text="THỐNG KÊ CỬA HÀNG"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="16dp"/>
+
+        <!-- BỘ LỌC THỜI GIAN -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xem theo:"
+                android:textStyle="bold"
+                android:layout_marginEnd="12dp"/>
+            <Spinner
+                android:id="@+id/spnFilterTime"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/bg_input"
+                android:paddingHorizontal="12dp"/>
+        </LinearLayout>
 
         <!-- TỔNG DOANH THU -->
         <androidx.cardview.widget.CardView
@@ -34,9 +55,10 @@
                 android:orientation="vertical"
                 android:padding="20dp">
                 <TextView
+                    android:id="@+id/lblRevenueTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tổng doanh thu (Đã duyệt)"
+                    android:text="Doanh thu trong kỳ"
                     android:textColor="#666666"
                     android:textSize="14sp"/>
                 <TextView
@@ -51,7 +73,7 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- BIỂU ĐỒ -->
+        <!-- BIỂU ĐỒ DOANH THU -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="300dp"
@@ -66,7 +88,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Biểu đồ doanh thu"
+                    android:text="Biểu đồ xu hướng doanh thu"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp"/>
                 <com.github.mikephil.charting.charts.BarChart
@@ -76,63 +98,66 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
+        <!-- BIỂU ĐỒ TRẠNG THÁI ĐƠN HÀNG -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:layout_marginBottom="24dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="12dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Thống kê trạng thái đơn hàng"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pieChart"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
         <!-- SÁCH BÁN CHẠY -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sách bán chạy nhất"
+            android:text="Top sản phẩm bán chạy"
             android:textStyle="bold"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
             android:textColor="#333333"/>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="2dp"
-            android:layout_marginBottom="24dp">
-            <TextView
-                android:id="@+id/txtBestSeller"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="Đang cập nhật..."
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
-        </androidx.cardview.widget.CardView>
 
-        <!-- DANH SÁCH ĐƠN THÀNH CÔNG -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đơn hàng thành công (Đã duyệt)"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp"
-            android:textColor="#4CAF50"/>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSuccessOrders"
+            android:id="@+id/rvBestSellers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"
             android:layout_marginBottom="24dp"/>
 
-        <!-- DANH SÁCH ĐƠN ĐÃ HỦY -->
+        <!-- DANH SÁCH ĐƠN THÀNH CÔNG (HIDDEN) -->
         <TextView
+            android:id="@+id/lblSuccessOrders"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đơn hàng đã hủy"
+            android:text="Chi tiết đơn hàng thành công"
             android:textStyle="bold"
             android:textSize="16sp"
             android:layout_marginBottom="8dp"
-            android:textColor="#F44336"/>
+            android:textColor="#4CAF50"
+            android:visibility="gone"/>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCancelledOrders"
+            android:id="@+id/rvSuccessOrders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="24dp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
